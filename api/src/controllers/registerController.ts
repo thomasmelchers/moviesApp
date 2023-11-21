@@ -1,5 +1,6 @@
 import { Request, Response } from "express"
 import { UserModel } from "../models/userModel"
+import { omit } from "lodash"
 
 interface CreateUserRequestBody {
   username: string
@@ -39,11 +40,12 @@ const createNewUser = async (req: Request, res: Response) => {
       email,
     })
 
-    console.log(createdUser)
+    console.log(omit(createdUser.toJSON(), "password"))
 
-    res
-      .status(201)
-      .json({ success: "New user has been created", result: createdUser })
+    res.status(201).json({
+      success: "New user has been created",
+      result: omit(createdUser.toJSON(), "password"),
+    })
   } catch (err: any) {
     res.status(500).json({ fail: "User is not created", message: err.message })
   }
