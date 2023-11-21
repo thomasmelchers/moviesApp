@@ -1,7 +1,7 @@
 import { createContext, useState, ReactNode } from "react"
 import { IAuth } from "./IAuth"
 
-const initialAuthState = {
+export const initialAuthState = {
   username: "",
   accessToken: "",
   roles: {
