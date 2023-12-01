@@ -6,8 +6,10 @@ import Footer from "../components/footer/Footer"
 const Layout = () => {
   return (
     <>
-      <NavBar />
-      <main className="app">
+      <header className="header">
+        <NavBar />
+      </header>
+      <main className="App">
         <Outlet />
       </main>
       <Footer />

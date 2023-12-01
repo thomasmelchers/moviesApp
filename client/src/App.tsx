@@ -5,6 +5,7 @@ import Login from "./pages/login/Login"
 import Register from "./pages/register/Register"
 import Unauthorized from "./pages/unauthorized/Unauthorized"
 import PersistLogin from "./views/PersistLogin"
+import LandingPage from "./pages/landingPage/LandingPage"
 
 function App() {
   const ROLES = {
@@ -15,15 +16,17 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<Layout />} />
+      <Route path="/" element={<Layout />}>
+        {/* PUBLIC ROUTES */}
 
-      {/* PUBLIC ROUTES */}
-      <Route path="login" element={<Login />} />
-      <Route path="register" element={<Register />} />
-      <Route path="unauthorized" element={<Unauthorized />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route path="unauthorized" element={<Unauthorized />} />
 
-      {/* PRIVATE ROUTES */}
-      <Route element={<PersistLogin />}></Route>
+        {/* PRIVATE ROUTES */}
+        <Route element={<PersistLogin />}></Route>
+      </Route>
     </Routes>
   )
 }
