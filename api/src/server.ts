@@ -29,9 +29,9 @@ app.use(express.json())
 app.use(cookieParser())
 
 // Define your routes
-app.use("/api/movies", movieRoutes)
-app.use("/api/register", registerRoutes)
-app.use("/api/authentication", authenticationRoutes)
+app.use("/api/v1/movies", movieRoutes)
+app.use("/api/v1/register", registerRoutes)
+app.use("/api/v1/authentication", authenticationRoutes)
 
 // Setup Swagger documentation
 swaggerSetup(app)
