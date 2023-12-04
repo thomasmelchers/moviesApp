@@ -18,7 +18,6 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         {/* PUBLIC ROUTES */}
-
         <Route path="/" element={<LandingPage />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
@@ -26,6 +25,8 @@ function App() {
 
         {/* PRIVATE ROUTES */}
         <Route element={<PersistLogin />}></Route>
+
+        {/* CATCH ALL OTHER ROUTES */}
       </Route>
     </Routes>
   )

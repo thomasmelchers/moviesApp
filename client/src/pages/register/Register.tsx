@@ -121,14 +121,14 @@ const Register = () => {
       className={style.register__container}
     >
       {success ? (
-        <div className={style.success}>
+        <section className={style.success}>
           <h1>You are successfully registered!</h1>
           <Link to="/login">
             <button className={style.signin__button}>Sign In</button>
           </Link>
-        </div>
+        </section>
       ) : (
-        <>
+        <section>
           <h1>Register</h1>
           <p>{errMsg}</p>
 
@@ -294,7 +294,7 @@ const Register = () => {
               </p>
             </div>
           </form>
-        </>
+        </section>
       )}
     </Grid>
   )

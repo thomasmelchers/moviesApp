@@ -6,19 +6,20 @@ const authentication = async (req: Request, res: Response) => {
   const ACCESS_TOKEN_KEY = process.env.ACCESS_TOKEN_KEY || null
   const REFRESH_TOKEN_KEY = process.env.REFRESH_TOKEN_KEY || null
 
-  console.log("access: ", ACCESS_TOKEN_KEY, "refresh: ", REFRESH_TOKEN_KEY)
   const { username, password } = req.body
+
   if (!username || !password)
     return res
       .status(400)
       .json({ message: "Username and password are required." })
 
   const foundUser: IUser | null = await UserModel.findOne({ username }).exec()
-
+  console.log("user:", foundUser)
   const passwordMatch = foundUser
-    ? await foundUser.correctPassword(password, foundUser.password)
+    ? await foundUser.correctPassword(password)
     : null
 
+  console.log(password, "passwordMatch", passwordMatch)
   if (!foundUser || !passwordMatch) {
     return res.status(401).json({ message: "Credentials are not valid!" }) //Unauthorized
   }
@@ -34,7 +35,7 @@ const authentication = async (req: Request, res: Response) => {
       {
         UserInfo: {
           username,
-          roles: foundUser.roles,
+          roles: roles,
         },
       },
       ACCESS_TOKEN_KEY,
@@ -50,8 +51,8 @@ const authentication = async (req: Request, res: Response) => {
     // Saving refreshToken with current user
     foundUser.refreshToken = refreshToken
     const result = await foundUser.save()
-    console.log(result)
-    console.log(roles)
+    // console.log(result)
+    // console.log(roles)
 
     // Creates Secure Cookie with refresh token
     res.cookie("jwt", refreshToken, {

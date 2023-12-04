@@ -15,10 +15,7 @@ export interface IUser extends Document {
   lastname: string
   gender: string
   refreshToken: string
-  correctPassword: (
-    candidatePassword: string,
-    userPassword: string
-  ) => Promise<boolean>
+  correctPassword: (candidatePassword: string) => Promise<boolean>
 }
 
 const userSchema = new Schema(
@@ -109,10 +106,9 @@ userSchema.pre<IUser>("save", async function (next) {
 
 // VERYFYING THE PASSWORD FOR AUTHENTICATION
 userSchema.methods.correctPassword = async function (
-  candidatePassword: string,
-  userPassword: string
+  candidatePassword: string
 ): Promise<boolean> {
-  return await bcrypt.compare(candidatePassword, userPassword)
+  return await bcrypt.compare(candidatePassword, this.password)
 }
 
 export const UserModel = model<IUser>("User", userSchema)

@@ -15,7 +15,7 @@ const LandingPage = () => {
           <p>TomFlix</p>
         </div>
         <div className="landing-page__banner__signin">
-          <Link className="link" to="/logn">
+          <Link className="link" to="/login">
             <button>Sign In</button>
           </Link>
         </div>
