@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
 import { IUser, UserModel } from "../models/userModel"
 import jwt from "jsonwebtoken"
+import bcrypt from "bcrypt"
 
 const authentication = async (req: Request, res: Response) => {
   const ACCESS_TOKEN_KEY = process.env.ACCESS_TOKEN_KEY || null
@@ -8,19 +9,22 @@ const authentication = async (req: Request, res: Response) => {
 
   const { username, password } = req.body
 
-  if (!username || !password)
+  if (!username || !password) {
     return res
       .status(400)
       .json({ message: "Username and password are required." })
+  }
 
   const foundUser: IUser | null = await UserModel.findOne({ username }).exec()
-  console.log("user:", foundUser)
-  const passwordMatch = foundUser
-    ? await foundUser.correctPassword(password)
-    : null
 
-  console.log(password, "passwordMatch", passwordMatch)
+  if (!foundUser) {
+    return res.status(401).json({ message: "Credentials are not valid!" })
+  }
+
+  let passwordMatch = await bcrypt.compare(password, foundUser.password)
+
   if (!foundUser || !passwordMatch) {
+    console.log("not valid")
     return res.status(401).json({ message: "Credentials are not valid!" }) //Unauthorized
   }
 

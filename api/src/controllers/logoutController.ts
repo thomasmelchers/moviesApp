@@ -3,12 +3,14 @@ import { UserModel } from "../models/userModel"
 
 // Delete refreshToken - need to remove accessToken in Front end
 const logout = async (req: Request, res: Response) => {
+  console.log("from logout backend")
   const cookies = req.cookies
   if (!cookies?.jwt) {
     return res.sendStatus(204) // No content
   }
 
   const refreshToken = cookies.jwt
+  console.log(req.cookies)
 
   // Is refreshToken in db?
   const foundUser = await UserModel.findOne({ refreshToken }).exec()

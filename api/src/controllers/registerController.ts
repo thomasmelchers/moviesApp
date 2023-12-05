@@ -1,6 +1,7 @@
 import { Request, Response } from "express"
 import { UserModel } from "../models/userModel"
 import { omit } from "lodash"
+import bcrypt from "bcrypt"
 
 interface CreateUserRequestBody {
   username: string
@@ -33,9 +34,12 @@ const createNewUser = async (req: Request, res: Response) => {
   }
 
   try {
+    //encrypt the password
+    const hashedPwd = await bcrypt.hash(password, 10)
+
     const createdUser = await UserModel.create({
       username,
-      password,
+      password: hashedPwd,
       roles,
       email,
     })
