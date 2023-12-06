@@ -15,9 +15,6 @@ interface AuthProviderProps {
 export const initialAuthState = {
   username: "",
   accessToken: "",
-  roles: {
-    user: 0,
-  },
 }
 
 const AuthContext = createContext<AuthContextProps>({
