@@ -1,5 +1,4 @@
 import { Schema, Document, model } from "mongoose"
-import bcrypt from "bcrypt"
 import validator from "validator"
 
 export interface IUser extends Document {
@@ -90,25 +89,5 @@ const userSchema = new Schema(
   },
   { timestamps: true }
 )
-
-// BCRYPT THE PASSWORD
-// need to use "function" syntax like this TS correctly infers the type of "this"
-userSchema.pre<IUser>("save", async function (next) {
-  // Hash the password with cost of 12
-  this.password = await bcrypt.hash(
-    this.password,
-    Number(process.env.SALT_PASSWORD)
-  )
-  // Delete the passwordConfirm
-  //this.passwordConfirm = undefined
-  next()
-})
-
-// VERYFYING THE PASSWORD FOR AUTHENTICATION
-userSchema.methods.correctPassword = async function (
-  candidatePassword: string
-): Promise<boolean> {
-  return await bcrypt.compare(candidatePassword, this.password)
-}
 
 export const UserModel = model<IUser>("User", userSchema)

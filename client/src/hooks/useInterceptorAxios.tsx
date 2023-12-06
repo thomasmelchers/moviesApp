@@ -5,7 +5,7 @@ import useAuth from "./useAuth"
 
 // This is to attach the interceptor
 
-const useAxiosPrivate = () => {
+const useInterceptorAxios = () => {
   const refresh = useRefreshToken()
   const { auth } = useAuth()
 
@@ -49,4 +49,4 @@ const useAxiosPrivate = () => {
   return axiosPrivate
 }
 
-export default useAxiosPrivate
+export default useInterceptorAxios

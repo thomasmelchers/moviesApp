@@ -12,13 +12,13 @@ const Login = () => {
 
   const navigate = useNavigate()
   const location = useLocation()
+  const from = location.state?.from?.pathname || "/home"
 
   const usernameRef = useRef<HTMLElement>()
   const errRef = useRef<HTMLElement>()
 
   const [username, setUsername] = useState<string>("")
   const [password, setPassword] = useState<string>("")
-  const [success, setSuccess] = useState<boolean>(false)
   const [errorMessage, setErrorMessage] = useState<string>("")
 
   useEffect(() => {
@@ -31,16 +31,13 @@ const Login = () => {
     setErrorMessage("")
   }, [username, password])
 
+  // Persist login
   const togglePersist = () => {
     setPersist((prev) => !prev)
   }
 
   useEffect(() => {
-    if (persist === false || persist === true) {
-      return
-    } else {
-      localStorage.setItem("persist", persist)
-    }
+    localStorage.setItem("persist", String(persist))
   }, [persist])
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -55,8 +52,6 @@ const Login = () => {
           withCredentials: true,
         }
       )
-
-      console.log(JSON.stringify(response?.data))
       const accessToken = response?.data?.accessToken
       const roles = response?.data?.roles
       const auth = {
@@ -67,7 +62,7 @@ const Login = () => {
       setAuth(auth)
       setUsername("")
       setPassword("")
-      setSuccess(true)
+      navigate(from, { replace: true })
     } catch (error: any) {
       if (!error?.response) {
         setErrorMessage("No server response, try it later!")
@@ -159,7 +154,7 @@ const Login = () => {
               Need an Account?
               <br />
               <span>
-                <Link to="/register">Register</Link>
+                <Link to={URL.register}>Register</Link>
               </span>
             </p>
           </div>
