@@ -10,9 +10,14 @@
     "start-client": "cd client && npm start",
     "build": "npm run build-api && npm run build-client",
     "build-api": "cd api && npm run build",
-    "build-client": "cd client && npm run build"
+    "build-client": "cd client && npm run build",
+    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^3.1.0"
+  }
 }

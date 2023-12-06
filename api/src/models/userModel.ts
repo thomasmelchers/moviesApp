@@ -1,20 +1,20 @@
-import { Schema, Document, model } from "mongoose"
-import validator from "validator"
+import { Schema, Document, model } from "mongoose";
+import validator from "validator";
 
 export interface IUser extends Document {
   roles: {
-    User: number
-    Editor?: number
-    Admin?: number
-  }
-  username: string
-  password: string
-  email: string
-  firstname: string
-  lastname: string
-  gender: string
-  refreshToken: string
-  correctPassword: (candidatePassword: string) => Promise<boolean>
+    User: number;
+    Editor?: number;
+    Admin?: number;
+  };
+  username: string;
+  password: string;
+  email: string;
+  firstname: string;
+  lastname: string;
+  gender: string;
+  refreshToken: string;
+  correctPassword: (candidatePassword: string) => Promise<boolean>;
 }
 
 const userSchema = new Schema(
@@ -28,7 +28,7 @@ const userSchema = new Schema(
         type: Number,
         validate: {
           validator: function (value: number) {
-            return value === 2000
+            return value === 2000;
           },
           message: "Editor role should be set to 3000",
         },
@@ -37,7 +37,7 @@ const userSchema = new Schema(
         type: Number,
         validate: {
           validator: function (value: number) {
-            return value === 3000
+            return value === 3000;
           },
           message: "Admin role should be set to 3000",
         },
@@ -87,7 +87,7 @@ const userSchema = new Schema(
       type: String,
     },
   },
-  { timestamps: true }
-)
+  { timestamps: true },
+);
 
-export const UserModel = model<IUser>("User", userSchema)
+export const UserModel = model<IUser>("User", userSchema);

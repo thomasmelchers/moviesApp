@@ -1,5 +1,5 @@
-import swaggerJSDoc from "swagger-jsdoc"
-import swaggerUi from "swagger-ui-express"
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 
 const options = {
   definition: {
@@ -10,12 +10,12 @@ const options = {
     },
   },
   apis: ["./src/routes/*.ts"], // path to your route files
-}
+};
 
-const swaggerSpec = swaggerJSDoc(options)
+const swaggerSpec = swaggerJSDoc(options);
 
 function swaggerSetup(app: any) {
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 }
 
-export { swaggerSetup }
+export { swaggerSetup };

@@ -1,7 +1,7 @@
-import express from "express"
-import { Request, Response } from "express"
+import express from "express";
+import { Request, Response } from "express";
 
-const router = express.Router()
+const router = express.Router();
 
 // Define your routes here
 /**
@@ -14,7 +14,7 @@ const router = express.Router()
  *         description: Success
  */
 router.get("/", (req: Request, res: Response) => {
-  res.json({ message: "Hello from movie route!" })
-})
+  res.json({ message: "Hello from movie route!" });
+});
 
-export { router as movieRoutes }
+export { router as movieRoutes };
