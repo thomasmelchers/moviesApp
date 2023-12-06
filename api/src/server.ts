@@ -2,12 +2,14 @@ import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser"
 import dotenv from "dotenv"
+import { databaseConnection } from "./config/database"
 import { swaggerSetup } from "./swagger"
+
 import { movieRoutes } from "./routes/movieRoutes"
 import registerRoutes from "./routes/registerRoutes"
 import authenticationRoutes from "./routes/authenticationRoutes"
 import logoutRoutes from "./routes/logoutRoutes"
-import { databaseConnection } from "./config/database"
+import refreshTokenRoutes from "./routes/refrershToken"
 
 dotenv.config()
 const app = express()
@@ -34,6 +36,7 @@ app.use("/api/v1/movies", movieRoutes)
 app.use("/api/v1/register", registerRoutes)
 app.use("/api/v1/authentication", authenticationRoutes)
 app.use("/api/v1/logout", logoutRoutes)
+app.use("/api/v1/refreshToken", refreshTokenRoutes)
 
 // Setup Swagger documentation
 swaggerSetup(app)
