@@ -1,0 +1,56 @@
+@import '../../sass/styles/';
+
+.container {
+    background-color: $background-color;
+    height: 7vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $thirnary-color-main;
+
+    .title {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        margin-left: 3rem;
+    }
+
+    h1 {
+        display: inline-block;
+        color: $thirnary-color-dark;
+        letter-spacing: 3px;
+        margin-bottom: 0;
+    }
+
+    .menu {
+        margin-right: 3rem;
+        flex-grow: 0.5;
+    }
+}
+
+.menu__container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-grow: 1;
+
+    a,
+    a:visited {
+        display: inline-block;
+        color: $text-color-light;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: $thirnary-color-main;
+        transition: color 0.3s ease;
+    }
+}
+
+.menu__container__not-login {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-grow: 1;
+}

@@ -1,0 +1,50 @@
+@import '../../sass/styles/index.scss';
+
+.register {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.register__container {
+    background-color: $paper-color;
+    border-radius: 15px;
+    box-shadow: 15px 15px 15px $paper-color-shadow;
+}
+
+h1 {
+    margin-bottom: 1.5rem;
+    color: $title-color;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    padding-bottom: 1rem;
+}
+
+.form__layout {
+    width: 75%;
+    margin-bottom: 1rem;
+}
+
+.success {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h1 {
+        text-align: center;
+    }
+}
+
+.login_link_label {
+    font-size: $typo-text;
+    font-weight: 600;
+    color: $text-color;
+}
