@@ -51,6 +51,7 @@ const Login = () => {
                     withCredentials: true,
                 },
             )
+            console.log(response.data)
             const id = response?.data?.id
             const accessToken = response?.data?.accessToken
             const auth = {

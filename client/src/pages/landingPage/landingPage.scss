@@ -46,3 +46,9 @@
     justify-content: center;
     align-items: center;
 }
+
+.landing-page__banner__signin {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+}

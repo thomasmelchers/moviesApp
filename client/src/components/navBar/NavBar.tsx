@@ -14,6 +14,7 @@ const NavBar = () => {
         await logout()
         navigate('/')
     }
+    console.log(auth)
 
     return (
         <Grid container className="container">
