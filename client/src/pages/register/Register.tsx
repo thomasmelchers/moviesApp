@@ -137,7 +137,7 @@ const Register = () => {
                                 type="text"
                                 id="username"
                                 label="Username"
-                                variant="outlined"
+                                variant="filled"
                                 size="small"
                                 onChange={(e) => setUsername(e.target.value)}
                                 value={username}
@@ -148,6 +148,7 @@ const Register = () => {
                                 onBlur={() => setUsernameFocus(false)}
                                 fullWidth
                                 // Set invalid at the beginning
+                                sx={{ backgroundColor: 'transparent' }}
                                 inputProps={{
                                     'aria-invalid': validUsername
                                         ? 'false'
@@ -177,7 +178,7 @@ const Register = () => {
                                 type="email"
                                 id="email"
                                 label="Email"
-                                variant="outlined"
+                                variant="filled"
                                 size="small"
                                 onChange={(e) => setEmail(e.target.value)}
                                 value={email}
@@ -210,7 +211,7 @@ const Register = () => {
                                 type="password"
                                 id="password"
                                 label="Password"
-                                variant="outlined"
+                                variant="filled"
                                 size="small"
                                 onChange={(e) => setPassword(e.target.value)}
                                 value={password}
@@ -255,7 +256,7 @@ const Register = () => {
                                 type="password"
                                 id="confirmPassword"
                                 label="Confirm Password"
-                                variant="outlined"
+                                variant="filled"
                                 size="small"
                                 onChange={(e) =>
                                     setMatchPassword(e.target.value)

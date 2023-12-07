@@ -105,7 +105,7 @@ const Login = () => {
                             type="text"
                             id="username"
                             label="Username"
-                            variant="outlined"
+                            variant="filled"
                             size="small"
                             onChange={(e) => setUsername(e.target.value)}
                             value={username}
@@ -121,7 +121,7 @@ const Login = () => {
                             type="password"
                             id="password"
                             label="Password"
-                            variant="outlined"
+                            variant="filled"
                             size="small"
                             onChange={(e) => setPassword(e.target.value)}
                             value={password}
