@@ -45,7 +45,10 @@ function App() {
                         }
                     >
                         <Route path="home" element={<Home />} />
-                        <Route path="profile" element={<UserProfilePage />} />
+                        <Route
+                            path="profile/:id"
+                            element={<UserProfilePage />}
+                        />
                     </Route>
 
                     {/* Admin routes */}

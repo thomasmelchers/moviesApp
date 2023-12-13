@@ -40,6 +40,15 @@ const theme = createTheme({
         //         },
         //     },
         // },
+        MuiInputBase: {
+            styleOverrides: {
+                input: {
+                    '&.Mui-disabled': {
+                        WebkitTextFillColor: '#eeeeee',
+                    },
+                },
+            },
+        },
         MuiInputLabel: {
             styleOverrides: {
                 root: {
@@ -47,13 +56,16 @@ const theme = createTheme({
                     '&.Mui-focused': {
                         color: '#393e46',
                     },
+                    '&.Mui-disabled': {
+                        color: '#e5bd5f',
+                    },
                 },
             },
         },
         MuiFilledInput: {
             styleOverrides: {
                 root: {
-                    color: '#393e46',
+                    // color: '#393e46',
                     backgroundColor: 'rgba(255,211,105,0.7)',
                     borderRadius: '10px 10px 0 0',
                     '&:before, &:after': {
@@ -72,6 +84,10 @@ const theme = createTheme({
                     },
                     '&.Mui-focused:after': {
                         borderBottom: '3px solid #FFA07A',
+                    },
+                    '&.Mui-disabled': {
+                        backgroundColor: '#222831',
+                        opacity: 0.7,
                     },
                 },
             },
