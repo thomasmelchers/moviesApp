@@ -45,7 +45,7 @@ const authentication = async (req: Request, res: Response) => {
             },
             ACCESS_TOKEN_KEY,
             {
-                expiresIn: '10s',
+                expiresIn: '1h',
             },
         )
 
