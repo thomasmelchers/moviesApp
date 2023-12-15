@@ -1,8 +1,8 @@
-import { Router } from "express";
-import logout from "../controllers/logoutController";
+import { Router } from 'express'
+import logout from '../controllers/logoutController'
 
-const router = Router();
+const router = Router()
 
-router.get("/", logout);
+router.get('/', logout)
 
-export default router;
+export default router

@@ -1,24 +1,24 @@
 {
-  "name": "moviesapp",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run start-api && npm run start-client",
-    "start-api": "cd api && npm start",
-    "start-client": "cd client && npm start",
-    "build": "npm run build-api && npm run build-client",
-    "build-api": "cd api && npm run build",
-    "build-client": "cd client && npm run build",
-    "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
-    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "eslint": "^8.55.0",
-    "prettier": "^3.1.0"
-  }
+    "name": "moviesapp",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "npm run start-api && npm run start-client",
+        "start-api": "cd api && npm start",
+        "start-client": "cd client && npm start",
+        "build": "npm run build-api && npm run build-client",
+        "build-api": "cd api && npm run build",
+        "build-client": "cd client && npm run build",
+        "lint": "eslint --ignore-path .eslintignore --ext .js,.ts .",
+        "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "eslint": "^8.55.0",
+        "prettier": "^3.1.0"
+    }
 }
