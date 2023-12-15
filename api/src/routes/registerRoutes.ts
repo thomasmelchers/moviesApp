@@ -20,14 +20,14 @@
  *
  */
 
-import { Router } from "express";
-import createNewUser from "../controllers/registerController";
+import { Router } from 'express'
+import createNewUser from '../controllers/registerController'
 
-const router = Router();
+const router = Router()
 
 /**
  * @swagger
- * /api/register:
+ * /api/v1/register:
  *   post:
  *     summary: Endpoint to create a new user
  *     tags: [Register]
@@ -47,6 +47,6 @@ const router = Router();
  *       500:
  *         description: User is not created
  */
-router.post("/", createNewUser);
+router.post('/', createNewUser)
 
-export default router;
+export default router
