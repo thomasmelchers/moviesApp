@@ -1,40 +1,61 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Grid } from '@mui/material'
 import './userProfilePage.scss'
-import UPStringTextField from '../../components/userProfile/UPStringTextField'
-import UPDateTextField from '../../components/userProfile/UPDateTextField'
+import { useParams, useNavigate, useLocation } from 'react-router-dom'
+import axios from 'axios'
+import useInterceptorAxios from '../../hooks/useInterceptorAxios'
+import IUser from '../../interfaces/IUser'
+import UserProfileForm from '../../components/userProfile/UserProfileForm'
 
 const UserProfilePage = () => {
-    const [isFormModified, setIsFormModified] = useState<boolean>(false)
+    const { id } = useParams()
+    const interceptorAxios = useInterceptorAxios()
+    const navigate = useNavigate()
+    const location = useLocation()
 
-    const [username, setUsername] = useState<string>('user')
-    const [isUsernameDisabled, setIsUsernameDisabled] = useState<boolean>(true)
+    const effectRan = useRef(true)
 
-    const [firstname, setFirstname] = useState<string>('user')
-    const [isFirstnameDisabled, setIsFirstnameDisabled] =
-        useState<boolean>(true)
+    const [user, setUser] = useState<IUser>({
+        roles: { User: 1000 },
+        username: '',
+        email: '',
+        firstname: '',
+        lastname: '',
+        gender: '',
+        refreshToken: '',
+        _id: '',
+    })
 
-    const [lastname, setLastname] = useState<string>('user')
-    const [isLastnameDisabled, setIsLastnameDisabled] = useState<boolean>(true)
+    useEffect(() => {
+        const controller = new AbortController()
 
-    const [gender, setGender] = useState<string>('M')
-    const [isGenderDisabled, setIsGenderDisabled] = useState<boolean>(true)
-
-    const [email, setEmail] = useState<string>('edfdfddf@fdff')
-    const [isEmailDisabled, setIsEmailDisabled] = useState<boolean>(true)
-
-    const [date, setDate] = useState('')
-    const [isDateDisabled, setIsDateDisabled] = useState<boolean>(true)
-
-    const profileFormSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-
-        try {
-            // const response
-        } catch (error: any) {
-            console.error(error.errorMessage)
+        const getUsers = async () => {
+            try {
+                const response = await interceptorAxios.get(`/users/${id}`, {
+                    signal: controller.signal,
+                })
+                setUser(response.data.result)
+            } catch (err) {
+                if (axios.isCancel(err)) {
+                    console.log('Request canceled due to component unmounting')
+                } else {
+                    console.error(err)
+                    navigate('/login', {
+                        state: { from: location },
+                        replace: true,
+                    })
+                }
+            }
         }
-    }
+
+        getUsers()
+
+        // clean up function
+        return () => {
+            effectRan.current = false
+            controller.abort()
+        }
+    }, [])
 
     return (
         <Grid
@@ -48,9 +69,9 @@ const UserProfilePage = () => {
             className="container__profile"
         >
             <section>
-                <h1>Profile of </h1>
+                <h1>Profile of {user.username} </h1>
                 <div className="profile__wrapper">
-                    <div className="profile-form__container">
+                    {/* <div className="profile-form__container">
                         <form onSubmit={profileFormSubmit}>
                             <div className="profile-form__wrapper">
                                 <div className="profile-form__layout">
@@ -159,7 +180,8 @@ const UserProfilePage = () => {
                                 </button>
                             </div>
                         </form>
-                    </div>
+                    </div> */}
+                    <UserProfileForm user={user} />
                     <div className="image__container">image</div>
                 </div>
             </section>
