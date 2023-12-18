@@ -7,7 +7,7 @@ import Unauthorized from './pages/unauthorized/Unauthorized'
 import PersistLogin from './views/PersistLogin'
 import LandingPage from './pages/landingPage/LandingPage'
 import RequireAuth from './views/RequireAuth'
-import UserPage from './pages/user/UserPage'
+import UserProfilePage from './pages/userProfile/UserProfilePage'
 import Home from './pages/home/Home'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import NotFound from './pages/error/NotFound'
@@ -45,7 +45,10 @@ function App() {
                         }
                     >
                         <Route path="home" element={<Home />} />
-                        <Route path="profile/:id" element={<UserPage />} />
+                        <Route
+                            path="profile/:id"
+                            element={<UserProfilePage />}
+                        />
                     </Route>
 
                     {/* Admin routes */}

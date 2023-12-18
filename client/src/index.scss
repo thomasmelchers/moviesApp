@@ -1,0 +1,43 @@
+@import './sass/styles/index.scss';
+@import './sass/shared/index.scss';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background-color: $background-color;
+    font-family: $main-font-family;
+}
+
+.App {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 93vh;
+    padding: 1rem 0.5rem;
+}
+
+.line {
+    display: inline-block;
+}
+
+.instructions {
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+    background: $background-color;
+    color: $text-color-light;
+    padding: 0.5rem;
+    position: relative;
+    bottom: -10px;
+    transition: background-color 0.3s ease;
+}
+
+.offscreen {
+    position: absolute;
+    left: -9999px;
+}

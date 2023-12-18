@@ -1,0 +1,66 @@
+@import '../../sass/styles/index.scss';
+
+.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login__container {
+    background-color: $paper-color;
+    border-radius: 15px;
+    box-shadow: 15px 15px 15px $paper-color-shadow;
+}
+
+.login__container h1 {
+    margin-bottom: 1.5rem;
+    color: $title-color;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 1rem;
+}
+
+.form__layout {
+    width: 75%;
+    margin-bottom: 1rem;
+}
+
+.error {
+    background-color: $error-background-color;
+    color: $error-text-color;
+    font-weight: bold;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    border: 1px solid $error-text-color;
+    border-radius: 5px;
+}
+
+.persistCheck {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    font-size: 0.8rem;
+    color: $text-color;
+    font-weight: bold;
+
+    input {
+        margin-right: 10px;
+    }
+
+    input:hover {
+        cursor: pointer;
+    }
+}
+
+.register_link_label {
+    font-size: $typo-text;
+    font-weight: 600;
+    color: $text-color;
+}

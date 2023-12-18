@@ -1,0 +1,25 @@
+@import '../styles/index.scss';
+
+button {
+    padding: 0.75rem 1rem;
+    border-radius: 15px;
+    border: none;
+    background-color: $thirnary-color-main;
+    color: $primary-color-main;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: $thirnary-color-dark;
+    }
+
+    &:disabled {
+        color: $quaternary-color-main;
+        opacity: 0.7;
+        background-color: $secondary-color-main;
+        cursor: not-allowed;
+    }
+}

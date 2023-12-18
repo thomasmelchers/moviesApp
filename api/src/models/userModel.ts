@@ -79,7 +79,7 @@ const userSchema = new Schema(
             type: String,
             maxlength: 1,
             enum: {
-                values: ['F', 'M', 'X'],
+                values: ['F', 'M', 'X', ''],
             },
         },
 

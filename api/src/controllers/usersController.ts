@@ -72,6 +72,7 @@ export const updateUser = async (req: Request, res: Response) => {
             result: omit(updatedUser.toJSON(), 'password'),
         })
     } catch (error: any) {
+        console.error(error)
         res.status(500).json({ error: 'Internal Server Error' })
     }
 }

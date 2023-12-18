@@ -1,0 +1,25 @@
+.actionButtons {
+    transition: transform ease 0.3s;
+}
+
+.actionButtons:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.modifiedButton {
+    color: #3498db;
+}
+
+.validationButton {
+    color: #2ecc71;
+}
+
+.clearButton {
+    color: #e74c3c;
+}
+
+.invalid {
+    color: grey;
+    cursor: not-allowed;
+}

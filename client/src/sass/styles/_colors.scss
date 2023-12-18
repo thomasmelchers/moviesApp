@@ -1,0 +1,29 @@
+// colors definition
+$primary-color-main: #222831;
+
+$secondary-color-main: #393e46;
+$secondary-color-light: lighten($secondary-color-main, 10%);
+$secondary-color-dark: darken($secondary-color-main, 10%);
+
+$thirnary-color-main: #ffd369;
+$thirnary-color-light: lighten($thirnary-color-main, 10%);
+$thirnary-color-dark: darken($thirnary-color-main, 10%);
+
+$quaternary-color-main: #eeeeee;
+$quaternary-color-light: lighten($quaternary-color-main, 10%);
+$quaternary-color-dark: darken($quaternary-color-main, 10%);
+
+$light-salmon: #ffa07a;
+
+$error-background-color: #e63946;
+$error-text-color: #701c23;
+
+$background-color: $primary-color-main;
+
+$paper-color: $quaternary-color-light;
+$paper-color-shadow: rgba(255, 255, 255, 0.5);
+
+$title-color: $secondary-color-dark;
+
+$text-color: $secondary-color-main;
+$text-color-light: $quaternary-color-main;

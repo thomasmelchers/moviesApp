@@ -1,0 +1,51 @@
+@import '../../sass/styles/';
+
+.profile-form__container {
+    width: 70%;
+}
+
+.profile-form__wrapper {
+    width: 100%;
+}
+
+.profile-form__layout {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.profile-form__layout-split50-50 {
+    width: 49%;
+}
+
+.profile-form__layout-split75 {
+    width: 74%;
+}
+
+.profile-form__layout-split25 {
+    width: 25%;
+}
+
+.message-box {
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 0.5rem;
+    margin-bottom: 0.75rem;
+    width: 100%;
+    text-align: center;
+}
+
+.success {
+    background-color: #55efc4;
+    border: 1px solid #00b894;
+    color: #00b894;
+}
+
+.error {
+    background-color: $error-background-color;
+    border: 1px solid $error-text-color;
+    color: $error-text-color;
+}

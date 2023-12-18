@@ -1,0 +1,13 @@
+@import '../styles/index.scss';
+
+a,
+a:visited {
+    color: $thirnary-color-main;
+    text-decoration: underline;
+    font-weight: 700;
+    font-size: 1rem;
+
+    &:hover {
+        color: $thirnary-color-dark;
+    }
+}
