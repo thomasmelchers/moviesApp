@@ -5,7 +5,6 @@ import dotenv from 'dotenv'
 import { databaseConnection } from './config/database'
 import { swaggerSetup } from './swagger'
 
-import { movieRoutes } from './routes/movieRoutes'
 import registerRoutes from './routes/registerRoutes'
 import authenticationRoutes from './routes/authenticationRoutes'
 import logoutRoutes from './routes/logoutRoutes'
@@ -37,7 +36,6 @@ app.use(cookieParser())
 swaggerSetup(app)
 
 // Define your routes
-app.use('/api/v1/movies', movieRoutes)
 app.use('/api/v1/register', registerRoutes)
 app.use('/api/v1/authentication', authenticationRoutes)
 app.use('/api/v1/logout', logoutRoutes)

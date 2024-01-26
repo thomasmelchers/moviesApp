@@ -4,6 +4,8 @@ import {
     getAllUser,
     getUser,
     updateUser,
+    getLikesByUser,
+    updateMoviesLikesByUser,
 } from '../controllers/usersController'
 import verifyRoles from '../middlewares/verifyRoles'
 import ROLES_LIST from '../config/roles_list'
@@ -51,7 +53,10 @@ router.get('/', verifyRoles(ROLES_LIST.Admin), getAllUser)
  *         description: Internal Server Error
  */
 router.get('/:id', verifyIdOrRoles(), getUser)
+router.get('/:id/likes', verifyIdOrRoles(), getLikesByUser)
+
 router.patch('/:id', verifyIdOrRoles(), updateUser)
+router.patch('/:id/likes', verifyIdOrRoles(), updateMoviesLikesByUser)
 router.delete('/:id', verifyRoles(ROLES_LIST.Admin), deleteUser)
 
 export default router
