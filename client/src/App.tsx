@@ -11,6 +11,9 @@ import UserProfilePage from './pages/userProfile/UserProfilePage'
 import Home from './pages/home/Home'
 import AdminDashboard from './pages/admin/AdminDashboard'
 import NotFound from './pages/error/NotFound'
+import Movies from './pages/movies/Movies'
+import Movie from './pages/movies/Movie'
+import MoviesType from './pages/movies/MoviesType'
 
 function App() {
     const ROLES = {
@@ -49,6 +52,12 @@ function App() {
                             path="profile/:id"
                             element={<UserProfilePage />}
                         />
+                        <Route path="movies" element={<Movies />} />
+                        <Route
+                            path="movies/:movieType"
+                            element={<MoviesType />}
+                        />
+                        <Route path="movie/:id" element={<Movie />} />
                     </Route>
 
                     {/* Admin routes */}
