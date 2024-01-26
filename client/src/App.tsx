@@ -14,6 +14,9 @@ import NotFound from './pages/error/NotFound'
 import Movies from './pages/movies/Movies'
 import Movie from './pages/movies/Movie'
 import MoviesType from './pages/movies/MoviesType'
+import TvShow from './pages/tvShows/TvShow'
+import TvShows from './pages/tvShows/TvShows'
+import TvShowsType from './pages/tvShows/TvShowsType'
 
 function App() {
     const ROLES = {
@@ -58,6 +61,12 @@ function App() {
                             element={<MoviesType />}
                         />
                         <Route path="movie/:id" element={<Movie />} />
+                        <Route path="tv-shows" element={<TvShows />} />
+                        <Route
+                            path="tv-shows/:tvShowsType"
+                            element={<TvShowsType />}
+                        />
+                        <Route path="tv-show/:id" element={<TvShow />} />
                     </Route>
 
                     {/* Admin routes */}
