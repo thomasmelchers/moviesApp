@@ -33,10 +33,10 @@ const NavBar = () => {
                         <Link to="/home" className="menu__link">
                             Home
                         </Link>
-                        <Link to="" className="menu__link">
+                        <Link to="/movies" className="menu__link">
                             Movies
                         </Link>
-                        <Link to="" className="menu__link">
+                        <Link to="/series" className="menu__link">
                             Series
                         </Link>
                         <Link to={`/profile/${auth.id}`} className="menu__link">

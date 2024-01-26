@@ -14,6 +14,10 @@ export interface IUser extends Document {
     lastname: string
     gender: string
     refreshToken: string
+    likes: {
+        movies: number[]
+        series: number[]
+    }
     correctPassword: (candidatePassword: string) => Promise<boolean>
 }
 
@@ -85,6 +89,15 @@ const userSchema = new Schema(
 
         refreshToken: {
             type: String,
+        },
+
+        likes: {
+            movies: {
+                type: [Number],
+            },
+            series: {
+                type: [Number],
+            },
         },
     },
     { timestamps: true },

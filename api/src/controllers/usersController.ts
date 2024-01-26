@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { UserModel } from '../models/userModel'
+import { UserModel, IUser } from '../models/userModel'
 import { omit } from 'lodash'
 
 export const getAllUser = async (req: Request, res: Response) => {
@@ -25,17 +25,19 @@ export const getUser = async (req: Request, res: Response) => {
     const userId: string | undefined = req.params.id
 
     if (!userId) {
-        res.status(400).json({ error: 'Bad request: The id is required' })
+        return res
+            .status(400)
+            .json({ error: 'Bad request: The id is required' })
     }
 
     try {
         const user = await UserModel.findById(userId)
 
         if (!user) {
-            res.status(404).json({ error: 'User record not found' })
+            return res.status(404).json({ error: 'User record not found' })
         }
 
-        res.status(200).json({
+        return res.status(200).json({
             message: 'User record sucessfully found',
             result: omit(user?.toJSON(), 'password'),
         })
@@ -102,4 +104,76 @@ export const deleteUser = async (req: Request, res: Response) => {
     } catch (error: any) {
         res.status(500).json({ error: 'Internal Server Error' })
     }
+}
+
+export const getLikesByUser = async (req: Request, res: Response) => {
+    const userId: string | undefined = req.params.id
+
+    if (!userId) {
+        res.status(400).json({ error: 'Bad request: The id is required' })
+    }
+
+    try {
+        const user: IUser | null = await UserModel.findById(userId)
+
+        if (!user) {
+            return res.status(404).json({ error: 'User record not found' })
+        }
+
+        res.status(200).json({
+            message: 'User record sucessfully found',
+            result: user.likes,
+        })
+    } catch (error: any) {
+        res.status(500).json({ error: 'Internal Server Error' })
+    }
+}
+
+export const updateMoviesLikesByUser = async (req: Request, res: Response) => {
+    const userId: string | undefined = req.params.id
+    const { movieLike } = req.body
+
+    if (!userId || !movieLike) {
+        return res
+            .status(400)
+            .json({ error: 'Bad request: The id is required' })
+    }
+
+    try {
+        const user: IUser | null = await UserModel.findById(userId)
+
+        if (!user) {
+            return res.status(404).json({ error: 'User record not found' })
+        }
+
+        let updatedLikes: number[] = updateLikes(user.likes.movies, movieLike)
+
+        const updatedUser = await UserModel.findByIdAndUpdate(
+            userId,
+            { 'likes.movies': updatedLikes },
+            {
+                new: true,
+                runValidators: true,
+            },
+        )
+
+        if (!updatedUser) {
+            return res.status(404).json({
+                error: "This user id doesn't exist. Not possible to do the update",
+            })
+        }
+
+        return res.status(200).json({
+            message: 'User record successfully update',
+            result: omit(updatedUser.toJSON(), 'password'),
+        })
+    } catch (error: any) {
+        res.status(500).json({ error: 'Internal Server Error' })
+    }
+}
+
+const updateLikes = (likesArray: number[], productLike: number): number[] => {
+    return likesArray.includes(productLike)
+        ? likesArray.filter((e) => e !== productLike)
+        : [...likesArray, productLike]
 }

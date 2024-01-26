@@ -11,7 +11,6 @@ interface Props {
 }
 
 const UserProfileForm: React.FC<Props> = ({ user }) => {
-    console.log(user)
     const interceptorAxios = useInterceptorAxios()
 
     const [success, setSuccess] = useState<boolean>(false)

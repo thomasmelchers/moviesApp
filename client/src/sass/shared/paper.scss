@@ -1,0 +1,5 @@
+@mixin paper {
+    background-color: $paper-color;
+    border-radius: 15px;
+    box-shadow: 15px 15px 15px $paper-color-shadow;
+}
