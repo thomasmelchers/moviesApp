@@ -1,0 +1,15 @@
+@import '../../../sass/styles/';
+
+.movie-info__title {
+    color: $primary-color-main;
+    font-weight: 750;
+    font-size: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid $thirnary-color-light;
+}
+
+.movie-info__value {
+    color: $thirnary-color-dark;
+    font-weight: 500;
+    margin-left: 1rem;
+}
