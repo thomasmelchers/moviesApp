@@ -5,7 +5,7 @@ import CONSTANTES from '../../utils/constantes'
 import IMovieType from '../../interfaces/IMovieType'
 import { Grid } from '@mui/material'
 import MovieCard from '../../components/movies/MovieCard'
-import Spinner from '../../components/spinner/Spinner'
+import Spinner from '../../components/shared/spinner/Spinner'
 
 const MoviesType = () => {
     const { movieType } = useParams()
