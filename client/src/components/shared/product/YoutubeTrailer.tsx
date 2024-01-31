@@ -13,15 +13,24 @@ const YoutubeTrailer: React.FC<Props> = ({ id, productType }) => {
     const [video, setVideo] = useState<any | null>({})
 
     const fetchVideo = async () => {
-        const response = await axios.get(
-            `https://api.themoviedb.org/3/${productType}/${id}/videos?api_key=${CONSTANTES.TMDB_API_KEY}`,
-        )
+        try {
+            const response = await axios.get(
+                `https://api.themoviedb.org/3/${productType}/${id}/videos?api_key=${CONSTANTES.TMDB_API_KEY}`,
+            )
 
-        const videoKey = response.data.results.find(
-            (object: any) => object.type === 'Teaser',
-        )
-        setVideo(videoKey)
+            console.log(response.data.results)
+
+            const videoKey = response.data.results.find(
+                (object: any) =>
+                    object.type === 'Teaser' || object.type === 'Trailer',
+            )
+            setVideo(videoKey)
+        } catch (error: any) {
+            console.log(error.message)
+        }
     }
+
+    console.log('selected', video)
 
     useEffect(() => {
         fetchVideo()
@@ -29,28 +38,18 @@ const YoutubeTrailer: React.FC<Props> = ({ id, productType }) => {
 
     const embedUrl = `https://www.youtube.com/embed/${String(video?.key)}`
 
-    // const onPlayerReady: YouTubeProps['onReady'] = (event) => {
-    //     // access to player in all event handlers via event.target
-    //     event.target.pauseVideo()
-    // }
-
-    // const opts = {
-    //     // height: 'auto',
-    //     // width: '100%',
-    //     playerVars: {
-    //         // https://developers.google.com/youtube/player_parameters
-    //         autoplay: 1,
-    //         origin: 'http://localhost:3000',
-    //     },
-    // }
     return (
-        // <YouTube
-        //     videoId={String(video?.key)}
-        //     opts={opts}
-        //     onReady={onPlayerReady}
-        //     style={{ width: '100%', height: 'auto' }}
-        // />
-        <iframe title="YouTube Video" src={embedUrl} allowFullScreen></iframe>
+        <>
+            {video ? (
+                <iframe
+                    title="YouTube Video"
+                    src={embedUrl}
+                    allowFullScreen
+                ></iframe>
+            ) : (
+                <p>Sorry there is no trailer to display for this selection</p>
+            )}
+        </>
     )
 }
 
