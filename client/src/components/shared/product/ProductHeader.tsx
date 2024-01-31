@@ -12,6 +12,7 @@ interface Props {
     originalTitle: string
     id: number
     voteAverage: number
+    productType: ProductType
 }
 
 const ProductHeader: React.FC<Props> = ({
@@ -19,6 +20,7 @@ const ProductHeader: React.FC<Props> = ({
     originalTitle,
     voteAverage,
     id,
+    productType,
 }) => {
     const showOriginalTitle =
         title !== originalTitle ? (
@@ -48,7 +50,7 @@ const ProductHeader: React.FC<Props> = ({
                     <StarOutlinedIcon className="star-icon" />
                     <span> {voteAverage.toFixed(1)}/10</span>
                 </div>
-                <ProductLike productId={id} />
+                <ProductLike productId={id} productType={productType} />
             </Grid>
         </Grid>
     )
