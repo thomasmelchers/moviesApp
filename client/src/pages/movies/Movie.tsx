@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { Grid } from '@mui/material'
+import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import CONSTANTES from '../../utils/constantes'
-import YoutubeTrailer from '../../components/movie/YoutubeTrailer'
-import { useNavigate } from 'react-router-dom'
-import './movie.scss'
+import { Grid } from '@mui/material'
+import YoutubeTrailer from '../../components/shared/product/YoutubeTrailer'
+import ProductHeader from '../../components/shared/product/ProductHeader'
+import GenresTag from '../../components/shared/product/GenresTag'
+import ProductInfo from '../../components/shared/product/ProductInfo'
+import Spinner from '../../components/shared/spinner/Spinner'
 import IMovieData from '../../interfaces/IMovieData'
-import MovieHeader from '../../components/movie/MovieHeader'
-import Genres from '../../components/movie/Genres'
-import MovieInfo from '../../components/movie/MovieInfo'
-import Spinner from '../../components/spinner/Spinner'
+import './movie.scss'
 
 const Movie = () => {
     const { id } = useParams()
     const navigate = useNavigate()
 
     const [movie, setMovie] = useState<IMovieData | null>(null)
+    const productType = 'movie'
 
     const fetchMovie = async () => {
         try {
@@ -51,7 +51,13 @@ const Movie = () => {
             p={3}
             className="paper"
         >
-            <MovieHeader movie={movie} />
+            <ProductHeader
+                title={movie.title}
+                originalTitle={movie.original_title}
+                voteAverage={movie.vote_average}
+                id={movie.id}
+                productType={productType}
+            />
             <Grid
                 container
                 justifyContent={{ sm: 'center', lg: 'space-between' }}
@@ -74,12 +80,12 @@ const Movie = () => {
                     alignItems="center"
                     justifyContent="center"
                 >
-                    <YoutubeTrailer id={id} />
+                    <YoutubeTrailer id={id} productType={productType} />
                 </Grid>
                 <Grid container mt={2}>
                     <Grid container justifyContent="flex-start" item xs={12}>
                         {movie.genres.map((genre) => (
-                            <Genres key={genre.id} genreName={genre.name} />
+                            <GenresTag key={genre.id} genreName={genre.name} />
                         ))}
                     </Grid>
 
@@ -93,7 +99,15 @@ const Movie = () => {
                         mt={2}
                     >
                         <Grid item xs={12} md={6} lg={4}>
-                            <MovieInfo movie={movie} />
+                            <ProductInfo
+                                productType={productType}
+                                productionCompanyName={
+                                    movie.production_companies[0].name
+                                }
+                                orginalLanguage={movie.original_language}
+                                status={movie.status}
+                                releaseDate={movie.release_date}
+                            />
                         </Grid>
                         <Grid
                             item

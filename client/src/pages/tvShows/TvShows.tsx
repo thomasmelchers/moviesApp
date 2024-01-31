@@ -1,17 +1,18 @@
 import { Grid } from '@mui/material'
 import useTMDBApiGenres from '../../hooks/useTMDBApiGenres'
-import Spinner from '../../components/shared/spinner/Spinner'
 import ProductsTypeRow from '../../components/shared/productsTypeRow/ProductsTypeRow'
+import './tvShows.scss'
+import Spinner from '../../components/shared/spinner/Spinner'
 
-const Movies = () => {
-    const productType = 'movie'
+const TvShows = () => {
+    const productType = 'tv'
 
     const { loading, error, listOfSelectedGenres } = useTMDBApiGenres(
         productType,
         5,
     )
 
-    const rowsOfMovies = listOfSelectedGenres?.map((genre) => (
+    const rowOfSeries = listOfSelectedGenres?.map((genre) => (
         <ProductsTypeRow
             key={genre.name}
             productsTypeName={genre.name}
@@ -29,9 +30,9 @@ const Movies = () => {
             alignItems="center"
         >
             {error ? <p>{error}</p> : null}
-            {loading && !error ? <Spinner /> : rowsOfMovies}
+            {loading && !error ? <Spinner /> : rowOfSeries}
         </Grid>
     )
 }
 
-export default Movies
+export default TvShows

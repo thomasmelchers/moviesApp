@@ -1,4 +1,4 @@
-@import '../../sass/styles/';
+@import '../../../sass/styles/';
 
 .movie__header {
     display: flex;
@@ -43,9 +43,5 @@
             font-size: 1rem;
             margin-right: 1rem;
         }
-    }
-
-    .like-icon: hover {
-        cursor: pointer;
     }
 }

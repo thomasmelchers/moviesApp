@@ -1,11 +1,11 @@
 import React from 'react'
-import './genres.scss'
+import './genresTag.scss'
 
 interface Props {
     genreName: string
 }
 
-const Genres: React.FC<Props> = ({ genreName }) => {
+const GenresTag: React.FC<Props> = ({ genreName }) => {
     return (
         <div>
             <p className="movieGenre">{genreName}</p>
@@ -13,4 +13,4 @@ const Genres: React.FC<Props> = ({ genreName }) => {
     )
 }
 
-export default Genres
+export default GenresTag

@@ -1,30 +1,39 @@
 import React from 'react'
 import { Grid } from '@mui/material'
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined'
-import IMovieData from '../../interfaces/IMovieData'
-
-import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined'
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined'
-import './movieHeader.scss'
-import MovieLike from './MovieLike'
+import IMovieDetail from '../../../interfaces/IMovieData'
+import ProductLike from './ProductLike'
+import ITvShowDetail from '../../../interfaces/ITvShowDetail'
+import { ProductType } from '../../../types'
+import './productHeader.scss'
 
 interface Props {
-    movie: IMovieData
+    title: string
+    originalTitle: string
+    id: number
+    voteAverage: number
+    productType: ProductType
 }
 
-const MovieHeader: React.FC<Props> = ({ movie }) => {
-    const originalTitle =
-        movie.title !== movie.original_title ? (
+const ProductHeader: React.FC<Props> = ({
+    title,
+    originalTitle,
+    voteAverage,
+    id,
+    productType,
+}) => {
+    const showOriginalTitle =
+        title !== originalTitle ? (
             <p className="movie__header__title-original-tile">
-                {movie.original_title}
+                {originalTitle}
             </p>
         ) : null
 
     return (
         <Grid container className="movie__header">
             <Grid item xs={12} md={8} className="movie__header__title">
-                <h1>{movie.title}</h1>
-                {originalTitle}
+                <h1>{title}</h1>
+                {showOriginalTitle}
             </Grid>
             <Grid
                 item
@@ -39,12 +48,12 @@ const MovieHeader: React.FC<Props> = ({ movie }) => {
                 {/* <h6>Note</h6> */}
                 <div>
                     <StarOutlinedIcon className="star-icon" />
-                    <span> {movie.vote_average.toFixed(1)}/10</span>
+                    <span> {voteAverage.toFixed(1)}/10</span>
                 </div>
-                <MovieLike productId={movie.id} />
+                <ProductLike productId={id} productType={productType} />
             </Grid>
         </Grid>
     )
 }
 
-export default MovieHeader
+export default ProductHeader

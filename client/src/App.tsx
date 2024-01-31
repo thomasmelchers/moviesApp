@@ -13,7 +13,10 @@ import AdminDashboard from './pages/admin/AdminDashboard'
 import NotFound from './pages/error/NotFound'
 import Movies from './pages/movies/Movies'
 import Movie from './pages/movies/Movie'
-import MoviesType from './pages/movies/MoviesType'
+import MoviesGenre from './pages/movies/MoviesGenre'
+import TvShow from './pages/tvShows/TvShow'
+import TvShows from './pages/tvShows/TvShows'
+import TvShowsGenre from './pages/tvShows/TvShowsGenre'
 
 function App() {
     const ROLES = {
@@ -54,10 +57,16 @@ function App() {
                         />
                         <Route path="movies" element={<Movies />} />
                         <Route
-                            path="movies/:movieType"
-                            element={<MoviesType />}
+                            path="movies/:movieGenre"
+                            element={<MoviesGenre />}
                         />
                         <Route path="movie/:id" element={<Movie />} />
+                        <Route path="tv-shows" element={<TvShows />} />
+                        <Route
+                            path="tv-shows/:tvShowGenre"
+                            element={<TvShowsGenre />}
+                        />
+                        <Route path="tv-show/:id" element={<TvShow />} />
                     </Route>
 
                     {/* Admin routes */}

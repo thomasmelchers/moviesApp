@@ -36,7 +36,7 @@ const NavBar = () => {
                         <Link to="/movies" className="menu__link">
                             Movies
                         </Link>
-                        <Link to="/series" className="menu__link">
+                        <Link to="/tv-shows" className="menu__link">
                             Series
                         </Link>
                         <Link to={`/profile/${auth.id}`} className="menu__link">

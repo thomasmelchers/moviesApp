@@ -3,7 +3,7 @@ import './spinner.scss'
 
 const Spinner = () => {
     return (
-        <section>
+        <section className="spinner">
             <div className="loader">
                 {[...Array(20)].map((_, index) => (
                     <span

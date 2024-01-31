@@ -1,9 +1,13 @@
-interface IMovieDiscoverData {
+import IGenresApi from './IGenresApi'
+import IProductionCompanies from './IProductionCompanies'
+import ISpokenLanguages from './ISpokenLanguages'
+
+interface IMovieDetail {
     adult: boolean
     backdrop_path: string
     belong_to_collection: string | null
     budget: number
-    genres: IGenres[]
+    genres: IGenresApi[]
     homepage: string
     id: number
     imdb_id: string
@@ -25,21 +29,4 @@ interface IMovieDiscoverData {
     vote_count: number
 }
 
-export interface IGenres {
-    id: number
-    name: string
-}
-
-export interface IProductionCompanies {
-    id: number
-    logo_path: string
-    name: string
-    origin_country: string
-}
-
-export interface ISpokenLanguages {
-    english_name: string
-    iso_639_1: string
-    name: string
-}
-export default IMovieDiscoverData
+export default IMovieDetail
