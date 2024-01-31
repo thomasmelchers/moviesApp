@@ -18,6 +18,7 @@ const TvShow = () => {
     const [tvShow, setTvShow] = useState<ITvShowDetail | null>(null)
     const [loading, setLaoding] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
+    const productType = 'tv'
 
     const fetchMovie = async () => {
         try {
@@ -62,6 +63,7 @@ const TvShow = () => {
                     originalTitle={tvShow.original_name}
                     voteAverage={tvShow.vote_average}
                     id={tvShow.id}
+                    productType={productType}
                 />
                 <Grid
                     container
@@ -85,7 +87,7 @@ const TvShow = () => {
                         alignItems="center"
                         justifyContent="center"
                     >
-                        <YoutubeTrailer id={id} productType="tv" />
+                        <YoutubeTrailer id={id} productType={productType} />
                     </Grid>
                     <Grid container mt={2}>
                         <Grid
@@ -116,7 +118,7 @@ const TvShow = () => {
                         >
                             <Grid item xs={12} md={6} lg={4}>
                                 <ProductInfo
-                                    productType="tv"
+                                    productType={productType}
                                     productionCompanyName={
                                         tvShow.production_companies[0].name
                                     }

@@ -16,6 +16,7 @@ const Movie = () => {
     const navigate = useNavigate()
 
     const [movie, setMovie] = useState<IMovieData | null>(null)
+    const productType = 'movie'
 
     const fetchMovie = async () => {
         try {
@@ -55,6 +56,7 @@ const Movie = () => {
                 originalTitle={movie.original_title}
                 voteAverage={movie.vote_average}
                 id={movie.id}
+                productType={productType}
             />
             <Grid
                 container
@@ -78,7 +80,7 @@ const Movie = () => {
                     alignItems="center"
                     justifyContent="center"
                 >
-                    <YoutubeTrailer id={id} productType="movie" />
+                    <YoutubeTrailer id={id} productType={productType} />
                 </Grid>
                 <Grid container mt={2}>
                     <Grid container justifyContent="flex-start" item xs={12}>
@@ -98,7 +100,7 @@ const Movie = () => {
                     >
                         <Grid item xs={12} md={6} lg={4}>
                             <ProductInfo
-                                productType="movie"
+                                productType={productType}
                                 productionCompanyName={
                                     movie.production_companies[0].name
                                 }
