@@ -7,6 +7,7 @@ import ProductCard from '../../shared/productCard/ProductCard'
 import IMovieData from '../../../interfaces/IMovieData'
 import { ProductType } from '../../../types'
 import './productsTypeRow.scss'
+import ITvShowDetail from '../../../interfaces/ITvShowDetail'
 
 interface Props {
     productType: ProductType
@@ -21,14 +22,17 @@ const ProductsTypeRow: React.FC<Props> = ({
     productsTypeApiUrl,
     productsTypeGenreId,
 }) => {
-    const [productsData, setProductsData] = useState<IMovieData[]>()
+    const [moviesData, setMoviesData] = useState<IMovieData[]>()
+    const [tvShowsData, setTvShowsData] = useState<ITvShowDetail[]>()
     const [loading, setLoading] = useState<boolean>(true)
 
     const fetchMovies = async () => {
         try {
             const response = await axios.get(productsTypeApiUrl)
 
-            setProductsData(response.data.results)
+            productType === 'movie'
+                ? setMoviesData(response.data.results)
+                : setTvShowsData(response.data.results)
         } catch (error: any) {
             console.error(error.message)
         } finally {
@@ -39,6 +43,36 @@ const ProductsTypeRow: React.FC<Props> = ({
     useEffect(() => {
         fetchMovies()
     }, [])
+
+    const productRows = () => {
+        if (productType === 'movie') {
+            return moviesData
+                ?.slice(0, 8)
+                .map((movie: IMovieData) => (
+                    <ProductCard
+                        key={movie.id}
+                        productType={productType}
+                        productId={movie.id}
+                        productVoteAverage={movie.vote_average}
+                        productTitle={movie.title}
+                        productPosterPath={movie.poster_path}
+                    />
+                ))
+        } else if (productType === 'tv') {
+            return tvShowsData
+                ?.slice(0, 8)
+                .map((tvShow: ITvShowDetail) => (
+                    <ProductCard
+                        key={tvShow.id}
+                        productType={productType}
+                        productId={tvShow.id}
+                        productVoteAverage={tvShow.vote_average}
+                        productTitle={tvShow.name}
+                        productPosterPath={tvShow.poster_path}
+                    />
+                ))
+        }
+    }
 
     return (
         <Grid
@@ -68,15 +102,7 @@ const ProductsTypeRow: React.FC<Props> = ({
                     flexWrap="wrap"
                     width="100%"
                 >
-                    {productsData
-                        ?.slice(0, 8)
-                        .map((movie: any) => (
-                            <ProductCard
-                                product={movie}
-                                key={movie.id}
-                                productType={productType}
-                            />
-                        ))}
+                    {productRows()}
                 </Grid>
             )}
         </Grid>

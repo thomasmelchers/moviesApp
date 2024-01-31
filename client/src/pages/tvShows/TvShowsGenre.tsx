@@ -63,10 +63,13 @@ const TvShowsGenre = () => {
                     flexWrap="wrap"
                     width="100%"
                 >
-                    {tvShows?.map((tvShow: any) => (
+                    {tvShows?.map((tvShow: ITvShowDetail) => (
                         <ProductCard
                             productType="tv"
-                            product={tvShow}
+                            productId={tvShow.id}
+                            productTitle={tvShow.name}
+                            productPosterPath={tvShow.poster_path}
+                            productVoteAverage={tvShow.vote_average}
                             key={tvShow.id}
                         />
                     ))}

@@ -2,14 +2,14 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import CONSTANTES from '../../utils/constantes'
-import IMovieType from '../../interfaces/IMovieType'
+import IMovieData from '../../interfaces/IMovieData'
 import { Grid } from '@mui/material'
 import ProductCard from '../../components/shared/productCard/ProductCard'
 import Spinner from '../../components/shared/spinner/Spinner'
 
 const MoviesGenre = () => {
     const { movieGenre } = useParams()
-    const [moviesGenre, setMoviesGenre] = useState<IMovieType[]>()
+    const [moviesGenre, setMoviesGenre] = useState<IMovieData[]>()
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
 
@@ -66,10 +66,13 @@ const MoviesGenre = () => {
                     flexWrap="wrap"
                     width="100%"
                 >
-                    {moviesGenre?.map((movie: any) => (
+                    {moviesGenre?.map((movie: IMovieData) => (
                         <ProductCard
                             productType="movie"
-                            product={movie}
+                            productId={movie.id}
+                            productTitle={movie.title}
+                            productPosterPath={movie.poster_path}
+                            productVoteAverage={movie.vote_average}
                             key={movie.id}
                         />
                     ))}

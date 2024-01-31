@@ -7,14 +7,23 @@ import { ProductType } from '../../../types'
 import './productCard.scss'
 
 interface Props {
-    product: IMovieData
     productType: ProductType
+    productId: number
+    productTitle: string
+    productPosterPath: string
+    productVoteAverage: number
 }
 
-const ProductCard: React.FC<Props> = ({ product, productType }) => {
+const ProductCard: React.FC<Props> = ({
+    productType,
+    productId,
+    productTitle,
+    productPosterPath,
+    productVoteAverage,
+}) => {
     return (
         <Grid
-            key={product.id}
+            key={productId}
             item
             xs={12}
             md={6}
@@ -26,14 +35,14 @@ const ProductCard: React.FC<Props> = ({ product, productType }) => {
             <Link
                 to={
                     productType === 'movie'
-                        ? `/movie/${product.id}`
-                        : `/tv-show/${product.id}`
+                        ? `/movie/${productId}`
+                        : `/tv-show/${productId}`
                 }
             >
                 <div className="poster">
                     <img
-                        src={`https://image.tmdb.org/t/p/w500/${product.poster_path}`}
-                        alt={product.original_title}
+                        src={`https://image.tmdb.org/t/p/w500/${productPosterPath}`}
+                        alt={productTitle}
                         style={{
                             width: '100%',
                             maxWidth: '300px',
@@ -45,12 +54,12 @@ const ProductCard: React.FC<Props> = ({ product, productType }) => {
                 </div>
                 <div className="details">
                     <div className="title">
-                        <p>{product.title}</p>
+                        <p>{productTitle}</p>
                     </div>
                     <div className="ratings">
                         <div className="star">
                             <StarOutlinedIcon className="star-icon" />
-                            <span>{product.vote_average.toFixed(1)}</span>
+                            <span>{productVoteAverage.toFixed(1)}</span>
                         </div>
                     </div>
                 </div>
