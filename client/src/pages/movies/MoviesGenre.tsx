@@ -26,7 +26,11 @@ const MoviesGenre = () => {
                 `https://api.themoviedb.org/3/discover/movie?api_key=${CONSTANTES.TMDB_API_KEY}&with_genres=${moviesGenreNb}`,
             )
 
-            setMoviesGenre(response.data.results)
+            setMoviesGenre(
+                response.data.results.filter(
+                    (e: IMovieData) => e.backdrop_path !== null,
+                ),
+            )
         } catch (error: any) {
             console.error(error)
             setError(error.message)

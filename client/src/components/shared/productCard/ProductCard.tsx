@@ -40,17 +40,21 @@ const ProductCard: React.FC<Props> = ({
                 }
             >
                 <div className="poster">
-                    <img
-                        src={`https://image.tmdb.org/t/p/w500/${productPosterPath}`}
-                        alt={productTitle}
-                        style={{
-                            width: '100%',
-                            maxWidth: '300px',
-                            height: 'auto',
-                            borderRadius: '10px',
-                            transition: '0.5s',
-                        }}
-                    />
+                    {productPosterPath !== null ? (
+                        <img
+                            src={`https://image.tmdb.org/t/p/w500/${productPosterPath}`}
+                            alt={productTitle}
+                            style={{
+                                width: '100%',
+                                maxWidth: '300px',
+                                height: 'auto',
+                                borderRadius: '10px',
+                                transition: '0.5s',
+                            }}
+                        />
+                    ) : (
+                        <p>no cover for this product</p>
+                    )}
                 </div>
                 <div className="details">
                     <div className="title">

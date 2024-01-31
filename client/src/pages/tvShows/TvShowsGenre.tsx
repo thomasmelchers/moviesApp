@@ -25,7 +25,11 @@ const TvShowsGenre = () => {
             const response = await axios.get(
                 `https://api.themoviedb.org/3/discover/tv?api_key=${CONSTANTES.TMDB_API_KEY}&with_genres=${tvShowTypeNb}`,
             )
-            setTvShows(response.data.results)
+            setTvShows(
+                response.data.results.filter(
+                    (e: ITvShowDetail) => e.backdrop_path !== null,
+                ),
+            )
         } catch (error: any) {
             console.error(error)
         } finally {

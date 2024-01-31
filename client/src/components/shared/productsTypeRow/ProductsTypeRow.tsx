@@ -31,8 +31,16 @@ const ProductsTypeRow: React.FC<Props> = ({
             const response = await axios.get(productsTypeApiUrl)
 
             productType === 'movie'
-                ? setMoviesData(response.data.results)
-                : setTvShowsData(response.data.results)
+                ? setMoviesData(
+                      response.data.results.filter(
+                          (e: IMovieData) => e.backdrop_path !== null,
+                      ),
+                  )
+                : setTvShowsData(
+                      response.data.results.filter(
+                          (e: ITvShowDetail) => e.backdrop_path !== null,
+                      ),
+                  )
         } catch (error: any) {
             console.error(error.message)
         } finally {
