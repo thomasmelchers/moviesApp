@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import CONSTANTES from '../../utils/constantes'
@@ -7,27 +7,29 @@ import { Grid } from '@mui/material'
 import ProductCard from '../../components/shared/productCard/ProductCard'
 import Spinner from '../../components/shared/spinner/Spinner'
 
-const MoviesType = () => {
-    const { movieType } = useParams()
-    const [moviesType, setMoviesType] = useState<IMovieType>()
+const MoviesGenre = () => {
+    const { movieGenre } = useParams()
+    const [moviesGenre, setMoviesGenre] = useState<IMovieType[]>()
     const [loading, setLoading] = useState(true)
+    const [error, setError] = useState<string | null>(null)
 
-    let movieTypeSplit: string[] = []
-    if (movieType) {
-        movieTypeSplit = movieType?.split('-')
+    let movieGenreParamsSplit: string[] = []
+    if (movieGenre) {
+        movieGenreParamsSplit = movieGenre?.split('-')
     }
-    const movieTypeNb = movieTypeSplit[1]
-    const movieTypeName = movieTypeSplit[0]
+    const moviesGenreNb = movieGenreParamsSplit[1]
+    const moviesGenreName = movieGenreParamsSplit[0]
 
     const fetchMovies = async () => {
         try {
             const response = await axios.get(
-                `https://api.themoviedb.org/3/discover/movie?api_key=${CONSTANTES.TMDB_API_KEY}&with_genres=${movieTypeNb}`,
+                `https://api.themoviedb.org/3/discover/movie?api_key=${CONSTANTES.TMDB_API_KEY}&with_genres=${moviesGenreNb}`,
             )
 
-            setMoviesType(response.data)
+            setMoviesGenre(response.data.results)
         } catch (error: any) {
             console.error(error)
+            setError(error.message)
         } finally {
             setLoading(false)
         }
@@ -50,8 +52,9 @@ const MoviesType = () => {
             className="paper"
         >
             <div className="category-title">
-                <h2>{movieTypeName}</h2>
+                <h2>{moviesGenreName}</h2>
             </div>
+            {error ? <p>{error}</p> : null}
             {loading ? (
                 <Spinner />
             ) : (
@@ -63,7 +66,7 @@ const MoviesType = () => {
                     flexWrap="wrap"
                     width="100%"
                 >
-                    {moviesType?.results.map((movie: any) => (
+                    {moviesGenre?.map((movie: any) => (
                         <ProductCard
                             productType="movie"
                             product={movie}
@@ -76,4 +79,4 @@ const MoviesType = () => {
     )
 }
 
-export default MoviesType
+export default MoviesGenre
