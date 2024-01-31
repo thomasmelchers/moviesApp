@@ -16,7 +16,7 @@ import Movie from './pages/movies/Movie'
 import MoviesGenre from './pages/movies/MoviesGenre'
 import TvShow from './pages/tvShows/TvShow'
 import TvShows from './pages/tvShows/TvShows'
-import TvShowsType from './pages/tvShows/TvShowsType'
+import TvShowsGenre from './pages/tvShows/TvShowsGenre'
 
 function App() {
     const ROLES = {
@@ -63,8 +63,8 @@ function App() {
                         <Route path="movie/:id" element={<Movie />} />
                         <Route path="tv-shows" element={<TvShows />} />
                         <Route
-                            path="tv-shows/:tvShowType"
-                            element={<TvShowsType />}
+                            path="tv-shows/:tvShowGenre"
+                            element={<TvShowsGenre />}
                         />
                         <Route path="tv-show/:id" element={<TvShow />} />
                     </Route>

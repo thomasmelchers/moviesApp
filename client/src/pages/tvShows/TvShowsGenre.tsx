@@ -5,18 +5,17 @@ import ITvShowDetail from '../../interfaces/ITvShowDetail'
 import CONSTANTES from '../../utils/constantes'
 import Spinner from '../../components/shared/spinner/Spinner'
 import { Grid } from '@mui/material'
-import MovieCard from '../../components/movies/MovieCard'
 import ProductCard from '../../components/shared/productCard/ProductCard'
 
-const TvShowsType = () => {
-    const { tvShowType } = useParams()
-    console.log(tvShowType)
+const TvShowsGenre = () => {
+    const { tvShowGenre } = useParams()
+
     const [tvShows, setTvShows] = useState<ITvShowDetail[]>()
     const [loading, setLoading] = useState(true)
 
     let tvShowParamsSplit: string[] = []
-    if (tvShowType) {
-        tvShowParamsSplit = tvShowType?.split('-')
+    if (tvShowGenre) {
+        tvShowParamsSplit = tvShowGenre?.split('-')
     }
     const tvShowTypeNb = tvShowParamsSplit[1]
     const tvShowTypeName = tvShowParamsSplit[0]
@@ -77,4 +76,4 @@ const TvShowsType = () => {
     )
 }
 
-export default TvShowsType
+export default TvShowsGenre
