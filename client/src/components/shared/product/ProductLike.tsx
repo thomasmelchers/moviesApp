@@ -5,18 +5,18 @@ import useInterceptorAxios from '../../../hooks/useInterceptorAxios'
 import ILikes from '../../../interfaces/ILikes'
 import useAuth from '../../../hooks/useAuth'
 import './productLike.scss'
+import { ProductType } from '../../../types'
 
 interface Props {
     productId: number
+    productType: ProductType
 }
 
-const ProductLike: React.FC<Props> = ({ productId }) => {
+const ProductLike: React.FC<Props> = ({ productId, productType }) => {
     const [isLikeUpdated, setIsLikeUpdated] = useState<boolean>(false)
     const [isLiked, setIsLiked] = useState<boolean>(false)
     const { auth } = useAuth()
     const interceptorAxios = useInterceptorAxios()
-
-    const productKind = 'movie'
 
     const getMovieslikes = async () => {
         try {
@@ -34,7 +34,7 @@ const ProductLike: React.FC<Props> = ({ productId }) => {
         try {
             const response = await interceptorAxios.patch(
                 `/users/${auth.id}/likes`,
-                JSON.stringify({ movieLike: productId }),
+                JSON.stringify({ movieLike: productId, productType }),
                 {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true,
@@ -48,7 +48,7 @@ const ProductLike: React.FC<Props> = ({ productId }) => {
     }
 
     const checkLikes = (likes: ILikes) => {
-        if (productKind === 'movie') {
+        if (productType === 'movie') {
             setIsLiked(
                 likes.movies != null ? likes.movies.includes(productId) : false,
             )

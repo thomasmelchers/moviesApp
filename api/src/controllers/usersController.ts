@@ -131,9 +131,9 @@ export const getLikesByUser = async (req: Request, res: Response) => {
 
 export const updateMoviesLikesByUser = async (req: Request, res: Response) => {
     const userId: string | undefined = req.params.id
-    const { movieLike } = req.body
+    const { movieLike, productType } = req.body
 
-    if (!userId || !movieLike) {
+    if (!userId || !movieLike || !productType) {
         return res
             .status(400)
             .json({ error: 'Bad request: The id is required' })
@@ -146,11 +146,17 @@ export const updateMoviesLikesByUser = async (req: Request, res: Response) => {
             return res.status(404).json({ error: 'User record not found' })
         }
 
-        let updatedLikes: number[] = updateLikes(user.likes.movies, movieLike)
+        let updatedLikes: number[] = updateLikes(
+            productType === 'movie' ? user.likes.movies : user.likes.series,
+            movieLike,
+        )
+
+        const updateField =
+            productType === 'movie' ? 'likes.movies' : 'likes.series'
 
         const updatedUser = await UserModel.findByIdAndUpdate(
             userId,
-            { 'likes.movies': updatedLikes },
+            { $set: { [updateField]: updatedLikes } },
             {
                 new: true,
                 runValidators: true,
