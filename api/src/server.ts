@@ -19,19 +19,19 @@ const app = express()
 const PORT = process.env.PORT || 5000
 console.log('client:', process.env.CLIENT_URL, 'port:', process.env.PORT)
 
-app.use(
-    cors({
-        origin:
-            process.env.NODE_ENV === 'production'
-                ? process.env.CLIENT_URL
-                : 'http://localhost:3000',
-        credentials: true,
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-        preflightContinue: true,
-        allowedHeaders: ['Content-Type', 'Authorization'],
-        exposedHeaders: ['Content-Range', 'X-Content-Range'],
-    }),
-)
+// app.use(
+//     cors({
+//         origin:
+//             process.env.NODE_ENV === 'production'
+//                 ? process.env.CLIENT_URL
+//                 : 'http://localhost:3000',
+//         credentials: true,
+//         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//         preflightContinue: true,
+//         allowedHeaders: ['Content-Type', 'Authorization'],
+//         exposedHeaders: ['Content-Range', 'X-Content-Range'],
+//     }),
+// )
 app.use(express.json())
 app.use(cookieParser())
 
