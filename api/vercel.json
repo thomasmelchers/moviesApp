@@ -6,5 +6,5 @@
             "use": "@vercel/node"
         }
     ],
-    "routes": [{ "handle": "dist/server.ts", "src": "/.*" }]
+    "routes": [{ "src": "/.*", "dest": "dist/server.ts" }]
 }
