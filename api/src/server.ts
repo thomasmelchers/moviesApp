@@ -16,6 +16,7 @@ import errorHandler from './controllers/errorController'
 dotenv.config()
 const app = express()
 const PORT = process.env.PORT || 5000
+console.log('client:', process.env.CLIENT_URL, 'port:', process.env.PORT)
 
 app.use(
     cors({
