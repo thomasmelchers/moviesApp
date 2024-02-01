@@ -23,7 +23,10 @@ const allowCors =
     (fn: (req: Request, res: Response) => Promise<void>) =>
     async (req: Request, res: Response) => {
         res.setHeader('Access-Control-Allow-Credentials', 'true')
-        res.setHeader('Access-Control-Allow-Origin', '*')
+        res.setHeader(
+            'Access-Control-Allow-Origin',
+            'https://movies-app-omega-ten.vercel.app',
+        )
         // another common pattern
         // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
         res.setHeader(
