@@ -12,6 +12,7 @@ import usersRoutes from './routes/usersRoutes'
 import verifyJWT from './middlewares/verifyJWT'
 import MoviesAppError from './utils/moviesAppError'
 import errorHandler from './controllers/errorController'
+import testRoutes from './routes/testRoutes'
 
 dotenv.config()
 const app = express()
@@ -33,6 +34,8 @@ app.use(
 )
 app.use(express.json())
 app.use(cookieParser())
+
+app.use('/api/v1/test', testRoutes)
 
 // Setup Swagger documentation
 swaggerSetup(app)
