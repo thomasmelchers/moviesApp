@@ -33,12 +33,12 @@ const ProductsTypeRow: React.FC<Props> = ({
             productType === 'movie'
                 ? setMoviesData(
                       response.data.results.filter(
-                          (e: IMovieData) => e.backdrop_path !== null,
+                          (e: IMovieData) => e.poster_path !== null,
                       ),
                   )
                 : setTvShowsData(
                       response.data.results.filter(
-                          (e: ITvShowDetail) => e.backdrop_path !== null,
+                          (e: ITvShowDetail) => e.poster_path !== null,
                       ),
                   )
         } catch (error: any) {

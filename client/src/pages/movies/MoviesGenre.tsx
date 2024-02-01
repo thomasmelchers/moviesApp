@@ -28,7 +28,7 @@ const MoviesGenre = () => {
 
             setMoviesGenre(
                 response.data.results.filter(
-                    (e: IMovieData) => e.backdrop_path !== null,
+                    (e: IMovieData) => e.poster_path !== null,
                 ),
             )
         } catch (error: any) {
