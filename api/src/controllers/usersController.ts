@@ -1,59 +1,60 @@
 import { Request, Response } from 'express'
 import { UserModel, IUser } from '../models/userModel'
+import catchAsync from '../utils/catchAsync'
 import { omit } from 'lodash'
+import MoviesAppError from '../utils/moviesAppError'
+import { NextFunction } from 'connect'
 
-export const getAllUser = async (req: Request, res: Response) => {
-    try {
+export const getAllUser = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
         const data = await UserModel.find()
 
         // Converting Mongoose doc to JS object and then omit the password field
         const users = data.map((user) => omit(user.toObject(), 'password'))
 
         res.status(200).json({
+            status: 'success',
             message: 'Users records successfully found',
             result: users,
             length: users.length,
         })
-    } catch (error) {
-        res.status(500).json({
-            error: 'Internal Server Error',
-        })
-    }
-}
+    },
+)
 
-export const getUser = async (req: Request, res: Response) => {
-    const userId: string | undefined = req.params.id
+export const getUser = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+        const userId: string | undefined = req.params.id
 
-    if (!userId) {
-        return res
-            .status(400)
-            .json({ error: 'Bad request: The id is required' })
-    }
+        if (!userId) {
+            return next(
+                new MoviesAppError('Bad request: The id is required', 400),
+            )
+        }
 
-    try {
         const user = await UserModel.findById(userId)
 
         if (!user) {
-            return res.status(404).json({ error: 'User record not found' })
+            return next(new MoviesAppError('User record not found', 404))
         }
 
         return res.status(200).json({
+            status: 'success',
             message: 'User record sucessfully found',
             result: omit(user?.toJSON(), 'password'),
         })
-    } catch (error: any) {
-        res.status(500).json({ error: 'Internal Server Error' })
-    }
-}
+    },
+)
 
-export const updateUser = async (req: Request, res: Response) => {
-    const userId: string | undefined = req.params.id
+export const updateUser = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+        const userId: string | undefined = req.params.id
 
-    if (!userId) {
-        res.status(400).json({ error: 'Bad request: The id is required' })
-    }
+        if (!userId) {
+            return next(
+                new MoviesAppError('Bad request: The id is required', 400),
+            )
+        }
 
-    try {
         const updatedUser = await UserModel.findByIdAndUpdate(
             userId,
             req.body,
@@ -64,86 +65,92 @@ export const updateUser = async (req: Request, res: Response) => {
         )
 
         if (!updatedUser) {
-            return res.status(404).json({
-                error: "This user id doesn't exist. Not possible to do the update",
-            })
+            return next(
+                new MoviesAppError(
+                    "This user id doesn't exist. Not possible to do the update",
+                    404,
+                ),
+            )
         }
 
         return res.status(200).json({
+            status: 'success',
             message: 'User record successfully update',
             result: omit(updatedUser.toJSON(), 'password'),
         })
-    } catch (error: any) {
-        console.error(error)
-        res.status(500).json({ error: 'Internal Server Error' })
-    }
-}
+    },
+)
 
-export const deleteUser = async (req: Request, res: Response) => {
+export const deleteUser = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
     const userId: string | undefined = req.params.id
 
     if (!userId) {
-        res.status(400).json({ error: 'Bad request: The id is required' })
+        return next(new MoviesAppError('Bad request: The id is required', 400))
     }
 
-    try {
-        const deletedUser = await UserModel.findByIdAndDelete(req.params.id)
+    const deletedUser = await UserModel.findByIdAndDelete(req.params.id)
 
-        // if the user doesn't exist !
-        if (!deletedUser) {
-            return res.status(404).json({
-                error: "This user record ID doesn't exist !",
-            })
+    // if the user doesn't exist !
+    if (!deletedUser) {
+        return next(
+            new MoviesAppError("This user record ID doesn't exist !", 404),
+        )
+    }
+
+    return res.status(200).json({
+        status: 'success',
+        message: 'User record sucessfully deleted',
+        result: 'deleted',
+        deleted: omit(deletedUser?.toJSON(), 'password'),
+    })
+}
+
+export const getLikesByUser = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+        const userId: string | undefined = req.params.id
+
+        if (!userId) {
+            return next(
+                new MoviesAppError('Bad request: The id is required', 400),
+            )
         }
 
-        return res.status(200).json({
-            message: 'User record sucessfully deleted',
-            result: 'deleted',
-            deleted: omit(deletedUser?.toJSON(), 'password'),
-        })
-    } catch (error: any) {
-        res.status(500).json({ error: 'Internal Server Error' })
-    }
-}
-
-export const getLikesByUser = async (req: Request, res: Response) => {
-    const userId: string | undefined = req.params.id
-
-    if (!userId) {
-        res.status(400).json({ error: 'Bad request: The id is required' })
-    }
-
-    try {
         const user: IUser | null = await UserModel.findById(userId)
 
         if (!user) {
-            return res.status(404).json({ error: 'User record not found' })
+            return next(new MoviesAppError('User record not found', 404))
         }
 
         res.status(200).json({
+            status: 'success',
             message: 'User record sucessfully found',
             result: user.likes,
         })
-    } catch (error: any) {
-        res.status(500).json({ error: 'Internal Server Error' })
-    }
-}
+    },
+)
 
-export const updateMoviesLikesByUser = async (req: Request, res: Response) => {
-    const userId: string | undefined = req.params.id
-    const { movieLike, productType } = req.body
+export const updateMoviesLikesByUser = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+        const userId: string | undefined = req.params.id
+        const { movieLike, productType } = req.body
 
-    if (!userId || !movieLike || !productType) {
-        return res
-            .status(400)
-            .json({ error: 'Bad request: The id is required' })
-    }
+        if (!userId || !movieLike || !productType) {
+            return next(
+                new MoviesAppError(
+                    'Bad request: The user id, the movie id and product type are required',
+                    400,
+                ),
+            )
+        }
 
-    try {
         const user: IUser | null = await UserModel.findById(userId)
 
         if (!user) {
-            return res.status(404).json({ error: 'User record not found' })
+            return next(new MoviesAppError('User record not found', 404))
         }
 
         let updatedLikes: number[] = updateLikes(
@@ -164,19 +171,21 @@ export const updateMoviesLikesByUser = async (req: Request, res: Response) => {
         )
 
         if (!updatedUser) {
-            return res.status(404).json({
-                error: "This user id doesn't exist. Not possible to do the update",
-            })
+            return next(
+                new MoviesAppError(
+                    "This user id doesn't exist. Not possible to do the update",
+                    404,
+                ),
+            )
         }
 
         return res.status(200).json({
+            status: 'success',
             message: 'User record successfully update',
             result: omit(updatedUser.toJSON(), 'password'),
         })
-    } catch (error: any) {
-        res.status(500).json({ error: 'Internal Server Error' })
-    }
-}
+    },
+)
 
 const updateLikes = (likesArray: number[], productLike: number): number[] => {
     return likesArray.includes(productLike)

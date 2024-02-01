@@ -1,7 +1,9 @@
-import { Request, Response } from 'express'
+import { Request, Response, NextFunction } from 'express'
 import { UserModel } from '../models/userModel'
 import { omit } from 'lodash'
 import bcrypt from 'bcrypt'
+import catchAsync from '../utils/catchAsync'
+import MoviesAppError from '../utils/moviesAppError'
 
 interface CreateUserRequestBody {
     username: string
@@ -10,30 +12,19 @@ interface CreateUserRequestBody {
     email: string
 }
 
-const createNewUser = async (req: Request, res: Response) => {
-    const { username, password, roles, email } = req.body
+const createNewUser = catchAsync(
+    async (req: Request, res: Response, next: NextFunction) => {
+        const { username, password, roles, email } = req.body
 
-    if (!username || !email || !password) {
-        return res
-            .status(422)
-            .json({ message: 'Username, password and email are required' })
-    }
+        if (!password) {
+            return next(
+                new MoviesAppError(
+                    'Invalid input data: Password is required field',
+                    400,
+                ),
+            )
+        }
 
-    const duplicateUsername = await UserModel.findOne({ username }).exec()
-    if (duplicateUsername) {
-        return res.status(409).json({
-            message: 'This username already exist! Please, find another one.',
-        })
-    }
-
-    const duplicateEmail = await UserModel.findOne({ email }).exec()
-    if (duplicateEmail) {
-        return res
-            .status(409)
-            .json({ message: 'An account already exists for this email.' })
-    }
-
-    try {
         //encrypt the password
         const hashedPwd = await bcrypt.hash(password, 10)
 
@@ -45,15 +36,10 @@ const createNewUser = async (req: Request, res: Response) => {
         })
 
         res.status(201).json({
-            success: 'New user has been created',
+            status: 'success',
             result: omit(createdUser.toJSON(), 'password'),
         })
-    } catch (err: any) {
-        res.status(500).json({
-            fail: 'User is not created',
-            message: err.message,
-        })
-    }
-}
+    },
+)
 
 export default createNewUser

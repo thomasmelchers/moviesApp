@@ -7,7 +7,10 @@ const verifyIdOrRoles = () => {
         const userId = (req as any)?.id
 
         // Stop if no userRoles
-        if (!userRoles) return res.status(401).json({ error: 'Unauthorized' })
+        if (!userRoles)
+            return res
+                .status(401)
+                .json({ status: 'fail', message: 'Unauthorized access' })
 
         // If role is Admin => get access to the resource
         if (userRoles.includes(ROLES_LIST.Admin)) {
@@ -25,17 +28,22 @@ const verifyIdOrRoles = () => {
 
             if (!isAccessingOwnResource) {
                 return res.status(401).json({
-                    error: 'Unauthorized: Resource access not allowed.',
+                    status: 'fail',
+                    message: 'Unauthorized: Resource access not allowed.',
                 })
             }
 
-            console.log('Request sent by the user')
             return next()
         }
 
         // If role is not admin or user => no access
         else {
-            return res.status(401).send('Unauthorized: Admin role required.')
+            return res
+                .status(401)
+                .json({
+                    status: 'fail',
+                    message: 'Unauthorized: Admin role required.',
+                })
         }
     }
 }

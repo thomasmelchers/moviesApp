@@ -50,7 +50,7 @@ const userSchema = new Schema(
 
         username: {
             type: String,
-            required: true,
+            required: [true, 'Username is required field'],
             trim: true,
             unique: true,
         },
@@ -58,7 +58,7 @@ const userSchema = new Schema(
         email: {
             type: String,
             unique: true,
-            required: true,
+            required: [true, 'Email is required field'],
             trim: true,
             lowercase: true,
             validate: validator.isEmail,
@@ -66,6 +66,7 @@ const userSchema = new Schema(
 
         password: {
             type: String,
+            required: true,
             trim: true,
         },
 
