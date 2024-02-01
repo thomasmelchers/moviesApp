@@ -27,9 +27,9 @@ app.use(
                 : 'http://localhost:3000',
         credentials: true,
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-        /*         preflightContinue: true,
+        preflightContinue: true,
         allowedHeaders: ['Content-Type', 'Authorization'],
-        exposedHeaders: ['Content-Range', 'X-Content-Range'] */
+        exposedHeaders: ['Content-Range', 'X-Content-Range'],
     }),
 )
 app.use(express.json())
