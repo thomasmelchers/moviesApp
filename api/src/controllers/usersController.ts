@@ -28,6 +28,7 @@ export const getUser = async (req: Request, res: Response) => {
         return res
             .status(400)
             .json({ error: 'Bad request: The id is required' })
+        // new ErrorHandling('Bad request: The id is required', 400)
     }
 
     try {
@@ -50,7 +51,9 @@ export const updateUser = async (req: Request, res: Response) => {
     const userId: string | undefined = req.params.id
 
     if (!userId) {
-        res.status(400).json({ error: 'Bad request: The id is required' })
+        return res
+            .status(400)
+            .json({ error: 'Bad request: The id is required' })
     }
 
     try {
