@@ -3,7 +3,7 @@ import axios from 'axios'
 const BASE_URL =
     process.env.NODE_ENV === 'development'
         ? 'http://localhost:5000/api/v1'
-        : 'https://movies-app-server.vercel.app'
+        : 'https://movies-app-server.vercel.app/api/v1'
 
 export default axios.create({ baseURL: BASE_URL })
 
