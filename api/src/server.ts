@@ -5,7 +5,7 @@ import dotenv from 'dotenv'
 import { databaseConnection } from './config/database'
 import { swaggerSetup } from './swagger'
 import registerRoutes from './routes/registerRoutes'
-import authenticationRoutes from './routes/authenticationRoutes'
+import { authenticationHandlerRoutes } from './routes/authenticationRoutes'
 import logoutRoutes from './routes/logoutRoutes'
 import refreshTokenRoutes from './routes/refrershToken'
 import usersRoutes from './routes/usersRoutes'
@@ -82,7 +82,7 @@ swaggerSetup(app)
 
 // Define your routes
 app.use('/api/v1/register', registerRoutes)
-app.use('/api/v1/authentication', authenticationRoutes)
+app.use('/api/v1/authentication', allowCors(authenticationHandlerRoutes))
 app.use('/api/v1/logout', logoutRoutes)
 app.use('/api/v1/refreshToken', refreshTokenRoutes)
 
