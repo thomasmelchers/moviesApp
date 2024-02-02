@@ -17,54 +17,55 @@ import testRoutes from './routes/testRoutes'
 dotenv.config()
 const app = express()
 const PORT = process.env.PORT || 5000
-console.log('client:', process.env.CLIENT_URL, 'port:', process.env.PORT)
 
-const allowCors =
-    (fn: (req: Request, res: Response) => Promise<void>) =>
-    async (req: Request, res: Response) => {
-        res.setHeader('Access-Control-Allow-Credentials', 'true')
-        res.setHeader(
-            'Access-Control-Allow-Origin',
-            'https://movies-app-omega-ten.vercel.app',
-        )
-        // another common pattern
-        // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-        res.setHeader(
-            'Access-Control-Allow-Methods',
-            'GET,OPTIONS,PATCH,DELETE,POST,PUT',
-        )
-        res.setHeader(
-            'Access-Control-Allow-Headers',
-            'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version',
-        )
-        if (req.method === 'OPTIONS') {
-            res.status(200).end()
-            return
-        }
-        return await fn(req, res)
-    }
-
-const handler = async (req: Request, res: Response): Promise<void> => {
-    const d = new Date()
-    res.end(d.toString())
-}
-
-app.use(allowCors(handler))
-// app.use(
-//     cors({
-//         origin:
-//             process.env.NODE_ENV === 'production'
-//                 ? process.env.CLIENT_URL
-//                 : 'http://localhost:3000',
-//         credentials: true,
-//         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-//         preflightContinue: true,
-//         allowedHeaders: ['Content-Type', 'Authorization'],
-//         exposedHeaders: ['Content-Range', 'X-Content-Range'],
-//     }),
-// )
 app.use(express.json())
 app.use(cookieParser())
+
+// const allowCors =
+//     (fn: (req: Request, res: Response, next: NextFunction) => Promise<void>) =>
+//     async (req: Request, res: Response, next: NextFunction) => {
+//         res.setHeader('Access-Control-Allow-Credentials', 'true')
+//         res.setHeader(
+//             'Access-Control-Allow-Origin',
+//             process.env.NODE_ENV === 'development'
+//                 ? process.env.CLIENT_URL || 'http://localhost:3000'
+//                 : 'https://movies-app-omega-ten.vercel.app',
+//         )
+//         // another common pattern
+//         // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+//         res.setHeader(
+//             'Access-Control-Allow-Methods',
+//             'GET,OPTIONS,PATCH,DELETE,POST,PUT',
+//         )
+//         res.setHeader(
+//             'Access-Control-Allow-Headers',
+//             'Content-Type, Authorization',
+//         )
+//         if (req.method === 'OPTIONS') {
+//             res.status(200).end()
+//             return
+//         }
+//         return await fn(req, res, next)
+//     }
+
+// const handler = async (req: Request, res: Response): Promise<void> => {
+//     const d = new Date()
+//     res.end(d.toString())
+// }
+
+app.use(
+    cors({
+        origin:
+            process.env.NODE_ENV === 'production'
+                ? 'https://movies-app-omega-ten.vercel.app'
+                : 'http://localhost:3000',
+        credentials: true,
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        preflightContinue: true,
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        exposedHeaders: ['Content-Range', 'X-Content-Range'],
+    }),
+)
 
 app.use('/api/v1/test', testRoutes)
 

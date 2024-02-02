@@ -20,7 +20,7 @@
  *
  */
 
-import { Router } from 'express'
+import { Router, Request, Response, NextFunction } from 'express'
 import createNewUser from '../controllers/registerController'
 
 const router = Router()
@@ -48,5 +48,13 @@ const router = Router()
  *         description: User is not created
  */
 router.post('/', createNewUser)
+
+// export const registerMiddleware = async (
+//     req: Request,
+//     res: Response,
+//     next: NextFunction,
+// ): Promise<void> => {
+//     await router(req, res, next)
+// }
 
 export default router
