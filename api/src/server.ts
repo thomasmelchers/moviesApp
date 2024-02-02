@@ -67,7 +67,9 @@ app.use(
     }),
 )
 
-app.use('/api/v1/test', testRoutes)
+app.get('/', (req: Request, res: Response) => {
+    res.status(201).json('hello world')
+})
 
 // Setup Swagger documentation
 swaggerSetup(app)
