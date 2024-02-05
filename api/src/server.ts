@@ -74,7 +74,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
         'Access-Control-Allow-Origin',
         process.env.NODE_ENV === 'development'
             ? 'http://localhost:3000'
-            : 'https://movies-app-omega-ten.vercel.app',
+            : 'https://tomflix.vercel.app',
     )
     res.setHeader(
         'Access-Control-Allow-Methods',
@@ -84,7 +84,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     next()
 })
 
-app.get('/', (req: Request, res: Response) => {
+app.get('/api/v1', (req: Request, res: Response) => {
     res.status(201).json('hello world')
 })
 
