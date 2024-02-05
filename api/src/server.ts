@@ -21,6 +21,11 @@ const PORT = process.env.PORT || 5000
 app.use(express.json())
 app.use(cookieParser())
 
+const origin =
+    process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3000'
+        : 'https://tomflix.vercel.app'
+
 // const allowCors =
 //     (fn: (req: Request, res: Response, next: NextFunction) => Promise<void>) =>
 //     async (req: Request, res: Response, next: NextFunction) => {
@@ -70,12 +75,7 @@ app.use(cookieParser())
 
 app.use((req: Request, res: Response, next: NextFunction) => {
     res.setHeader('Access-Control-Allow-Credentials', 'true')
-    res.setHeader(
-        'Access-Control-Allow-Origin',
-        process.env.NODE_ENV === 'development'
-            ? 'http://localhost:3000'
-            : 'https://tomflix.vercel.app',
-    )
+    res.setHeader('Access-Control-Allow-Origin', origin)
     res.setHeader(
         'Access-Control-Allow-Methods',
         'GET,OPTIONS,PATCH,DELETE,POST,PUT',
@@ -83,6 +83,8 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
     next()
 })
+
+console.log(origin)
 
 app.get('/api/v1', (req: Request, res: Response) => {
     res.status(201).json('hello world')
