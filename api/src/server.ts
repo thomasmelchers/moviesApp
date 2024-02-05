@@ -21,52 +21,52 @@ const PORT = process.env.PORT || 5000
 app.use(express.json())
 app.use(cookieParser())
 
-const allowCors =
-    (fn: (req: Request, res: Response, next: NextFunction) => Promise<void>) =>
-    async (req: Request, res: Response, next: NextFunction) => {
-        res.setHeader('Access-Control-Allow-Credentials', 'true')
-        res.setHeader(
-            'Access-Control-Allow-Origin',
-            process.env.NODE_ENV === 'development'
-                ? process.env.CLIENT_URL || 'http://localhost:3000'
-                : 'https://movies-app-omega-ten.vercel.app',
-        )
-        // another common pattern
-        // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-        res.setHeader(
-            'Access-Control-Allow-Methods',
-            'GET,OPTIONS,PATCH,DELETE,POST,PUT',
-        )
-        res.setHeader(
-            'Access-Control-Allow-Headers',
-            'Content-Type, Authorization',
-        )
-        if (req.method === 'OPTIONS') {
-            res.status(200).end()
-            return
-        }
-        return await fn(req, res, next)
-    }
+// const allowCors =
+//     (fn: (req: Request, res: Response, next: NextFunction) => Promise<void>) =>
+//     async (req: Request, res: Response, next: NextFunction) => {
+//         res.setHeader('Access-Control-Allow-Credentials', 'true')
+//         res.setHeader(
+//             'Access-Control-Allow-Origin',
+//             process.env.NODE_ENV === 'development'
+//                 ? process.env.CLIENT_URL || 'http://localhost:3000'
+//                 : 'https://movies-app-omega-ten.vercel.app',
+//         )
+//         // another common pattern
+//         // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+//         res.setHeader(
+//             'Access-Control-Allow-Methods',
+//             'GET,OPTIONS,PATCH,DELETE,POST,PUT',
+//         )
+//         res.setHeader(
+//             'Access-Control-Allow-Headers',
+//             'Content-Type, Authorization',
+//         )
+//         if (req.method === 'OPTIONS') {
+//             res.status(200).end()
+//             return
+//         }
+//         return await fn(req, res, next)
+//     }
 
-app.use(
-    allowCors(async (req, res, next) => {
-        next()
-    }),
-)
+// app.use(
+//     allowCors(async (req, res, next) => {
+//         next()
+//     }),
+// )
 
-app.use(
-    cors({
-        origin:
-            process.env.NODE_ENV === 'production'
-                ? 'https://movies-app-omega-ten.vercel.app'
-                : 'http://localhost:3000',
-        credentials: true,
-        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-        preflightContinue: true,
-        allowedHeaders: ['Content-Type', 'Authorization'],
-        exposedHeaders: ['Content-Range', 'X-Content-Range'],
-    }),
-)
+const corsOptions = {
+    origin:
+        process.env.NODE_ENV === 'production'
+            ? 'https://movies-app-omega-ten.vercel.app'
+            : 'http://localhost:3000',
+    credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    // preflightContinue: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    exposedHeaders: ['Content-Range', 'X-Content-Range'],
+}
+
+app.use(cors(corsOptions))
 
 app.get('/', (req: Request, res: Response) => {
     res.status(201).json('hello world')
