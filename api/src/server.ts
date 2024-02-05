@@ -54,19 +54,35 @@ app.use(cookieParser())
 //     }),
 // )
 
-const corsOptions = {
-    origin:
-        process.env.NODE_ENV === 'production'
-            ? 'https://movies-app-omega-ten.vercel.app'
-            : 'http://localhost:3000',
-    credentials: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    // preflightContinue: true,
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    exposedHeaders: ['Content-Range', 'X-Content-Range'],
-}
+// const corsOptions = {
+//     origin:
+//         process.env.NODE_ENV === 'production'
+//             ? 'https://movies-app-omega-ten.vercel.app'
+//             : 'http://localhost:3000',
+//     credentials: true,
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//     // preflightContinue: true,
+//     allowedHeaders: ['Content-Type', 'Authorization'],
+//     exposedHeaders: ['Content-Range', 'X-Content-Range'],
+// }
 
-app.use(cors(corsOptions))
+// app.use(cors(corsOptions))
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+    res.setHeader('Access-Control-Allow-Credentials', 'true')
+    res.setHeader(
+        'Access-Control-Allow-Origin',
+        process.env.NODE_ENV === 'development'
+            ? 'http://localhost:3000'
+            : 'https://movies-app-omega-ten.vercel.app',
+    )
+    res.setHeader(
+        'Access-Control-Allow-Methods',
+        'GET,OPTIONS,PATCH,DELETE,POST,PUT',
+    )
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+    next()
+})
 
 app.get('/', (req: Request, res: Response) => {
     res.status(201).json('hello world')
