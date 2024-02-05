@@ -26,38 +26,32 @@ const origin =
         ? 'http://localhost:3000'
         : 'https://tomflix.vercel.app'
 
-// const allowCors =
-//     (fn: (req: Request, res: Response, next: NextFunction) => Promise<void>) =>
-//     async (req: Request, res: Response, next: NextFunction) => {
-//         res.setHeader('Access-Control-Allow-Credentials', 'true')
-//         res.setHeader(
-//             'Access-Control-Allow-Origin',
-//             process.env.NODE_ENV === 'development'
-//                 ? process.env.CLIENT_URL || 'http://localhost:3000'
-//                 : 'https://movies-app-omega-ten.vercel.app',
-//         )
-//         // another common pattern
-//         // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-//         res.setHeader(
-//             'Access-Control-Allow-Methods',
-//             'GET,OPTIONS,PATCH,DELETE,POST,PUT',
-//         )
-//         res.setHeader(
-//             'Access-Control-Allow-Headers',
-//             'Content-Type, Authorization',
-//         )
-//         if (req.method === 'OPTIONS') {
-//             res.status(200).end()
-//             return
-//         }
-//         return await fn(req, res, next)
-//     }
+const allowCors =
+    (fn: (req: Request, res: Response, next: NextFunction) => Promise<void>) =>
+    async (req: Request, res: Response, next: NextFunction) => {
+        res.setHeader('Access-Control-Allow-Credentials', 'true')
+        res.setHeader('Access-Control-Allow-Origin', origin)
 
-// app.use(
-//     allowCors(async (req, res, next) => {
-//         next()
-//     }),
-// )
+        res.setHeader(
+            'Access-Control-Allow-Methods',
+            'GET,OPTIONS,PATCH,DELETE,POST,PUT',
+        )
+        res.setHeader(
+            'Access-Control-Allow-Headers',
+            'Content-Type, Authorization',
+        )
+        if (req.method === 'OPTIONS') {
+            res.status(200).end()
+            return
+        }
+        return await fn(req, res, next)
+    }
+
+app.use(
+    allowCors(async (req, res, next) => {
+        next()
+    }),
+)
 
 // const corsOptions = {
 //     origin:
@@ -73,18 +67,18 @@ const origin =
 
 // app.use(cors(corsOptions))
 
-app.use((req: Request, res: Response, next: NextFunction) => {
-    res.setHeader('Access-Control-Allow-Credentials', 'true')
-    res.setHeader('Access-Control-Allow-Origin', origin)
-    res.setHeader(
-        'Access-Control-Allow-Methods',
-        'GET,OPTIONS,PATCH,DELETE,POST,PUT',
-    )
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-    next()
-})
+// app.use((req: Request, res: Response, next: NextFunction) => {
+//     res.setHeader('Access-Control-Allow-Credentials', 'true')
+//     res.setHeader('Access-Control-Allow-Origin', origin)
+//     res.setHeader(
+//         'Access-Control-Allow-Methods',
+//         'GET,OPTIONS,PATCH,DELETE,POST,PUT',
+//     )
+//     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+//     next()
+// })
 
-console.log(origin)
+console.log('origin:', origin)
 
 app.get('/api/v1', (req: Request, res: Response) => {
     res.status(201).json('hello world')
