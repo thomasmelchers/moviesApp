@@ -29,7 +29,7 @@ const allowCors =
             'Access-Control-Allow-Origin',
             process.env.NODE_ENV === 'development'
                 ? process.env.CLIENT_URL || 'http://localhost:3000'
-                : 'https://movies-app-omega-ten.vercel.app',
+                : 'https://movies-app-omega-ten.vercel.app/',
         )
         // another common pattern
         // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
@@ -48,30 +48,25 @@ const allowCors =
         return await fn(req, res, next)
     }
 
-const handler = async (req: Request, res: Response): Promise<void> => {
-    const d = new Date()
-    res.end(d.toString())
-}
-
 app.use(
     allowCors(async (req, res, next) => {
         next()
     }),
 )
 
-// app.use(
-//     cors({
-//         origin:
-//             process.env.NODE_ENV === 'production'
-//                 ? 'https://movies-app-omega-ten.vercel.app'
-//                 : 'http://localhost:3000',
-//         credentials: true,
-//         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-//         preflightContinue: true,
-//         allowedHeaders: ['Content-Type', 'Authorization'],
-//         exposedHeaders: ['Content-Range', 'X-Content-Range'],
-//     }),
-// )
+app.use(
+    cors({
+        origin:
+            process.env.NODE_ENV === 'production'
+                ? 'https://movies-app-omega-ten.vercel.app'
+                : 'http://localhost:3000',
+        credentials: true,
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        preflightContinue: true,
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        exposedHeaders: ['Content-Range', 'X-Content-Range'],
+    }),
+)
 
 app.get('/', (req: Request, res: Response) => {
     res.status(201).json('hello world')
@@ -80,9 +75,9 @@ app.get('/', (req: Request, res: Response) => {
 // Setup Swagger documentation
 swaggerSetup(app)
 
-// Define your routes
+// Routes definition
 app.use('/api/v1/register', registerRoutes)
-app.use('/api/v1/authentication', allowCors, authenticationRoutes)
+app.use('/api/v1/authentication', authenticationRoutes)
 app.use('/api/v1/logout', logoutRoutes)
 app.use('/api/v1/refreshToken', refreshTokenRoutes)
 
@@ -96,8 +91,6 @@ app.use('*', (req: Request, res: Response, next: NextFunction) => {
 })
 
 app.use(errorHandler)
-
-console.log(process.env.NODE_ENV)
 
 app.listen(PORT, async () => {
     await databaseConnection()
