@@ -29,7 +29,7 @@ const allowCors =
             'Access-Control-Allow-Origin',
             process.env.NODE_ENV === 'development'
                 ? process.env.CLIENT_URL || 'http://localhost:3000'
-                : 'https://movies-app-omega-ten.vercel.app/',
+                : 'https://movies-app-omega-ten.vercel.app',
         )
         // another common pattern
         // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
