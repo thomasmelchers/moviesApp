@@ -12,7 +12,7 @@ import usersRoutes from './routes/usersRoutes'
 import verifyJWT from './middlewares/verifyJWT'
 import MoviesAppError from './utils/moviesAppError'
 import errorHandler from './controllers/errorController'
-import testRoutes from './routes/testRoutes'
+import logger from './utils/logger'
 
 dotenv.config()
 const app = express()
@@ -106,5 +106,5 @@ app.use(errorHandler)
 
 app.listen(PORT, async () => {
     await databaseConnection()
-    console.log(`Server is running on http://localhost:${PORT}`)
+    logger.info(`Server is running on http://localhost:${PORT}`)
 })
