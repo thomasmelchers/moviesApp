@@ -61,7 +61,7 @@ const authentication = catchAsync(
             // Saving refreshToken with current user
             foundUser.refreshToken = refreshToken
             const result = await foundUser.save()
-            // console.log(result)
+            console.log(result)
             // console.log(roles)
 
             // Creates Secure Cookie with refresh token
@@ -73,7 +73,7 @@ const authentication = catchAsync(
             })
 
             // Send authorization roles and access token to user
-            res.json({ id, username, accessToken })
+            res.status(200).json({ id, username, accessToken })
         }
     },
 )
