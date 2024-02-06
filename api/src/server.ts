@@ -12,7 +12,7 @@ import usersRoutes from './routes/usersRoutes'
 import verifyJWT from './middlewares/verifyJWT'
 import MoviesAppError from './utils/moviesAppError'
 import errorHandler from './controllers/errorController'
-import logger from './utils/logger'
+import functions from 'firebase-functions'
 
 dotenv.config()
 const app = express()
@@ -25,33 +25,6 @@ const origin =
     process.env.NODE_ENV === 'development'
         ? 'http://localhost:3000'
         : 'https://tomflix.vercel.app'
-
-const allowCors =
-    (fn: (req: Request, res: Response, next: NextFunction) => Promise<void>) =>
-    async (req: Request, res: Response, next: NextFunction) => {
-        res.setHeader('Access-Control-Allow-Credentials', 'true')
-        res.setHeader('Access-Control-Allow-Origin', origin)
-
-        res.setHeader(
-            'Access-Control-Allow-Methods',
-            'GET,OPTIONS,PATCH,DELETE,POST,PUT',
-        )
-        res.setHeader(
-            'Access-Control-Allow-Headers',
-            'Content-Type, Authorization',
-        )
-        if (req.method === 'OPTIONS') {
-            res.status(200).end()
-            return
-        }
-        return await fn(req, res, next)
-    }
-
-app.use(
-    allowCors(async (req, res, next) => {
-        next()
-    }),
-)
 
 // const corsOptions = {
 //     origin:
@@ -66,17 +39,6 @@ app.use(
 // }
 
 // app.use(cors(corsOptions))
-
-// app.use((req: Request, res: Response, next: NextFunction) => {
-//     res.setHeader('Access-Control-Allow-Credentials', 'true')
-//     res.setHeader('Access-Control-Allow-Origin', origin)
-//     res.setHeader(
-//         'Access-Control-Allow-Methods',
-//         'GET,OPTIONS,PATCH,DELETE,POST,PUT',
-//     )
-//     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-//     next()
-// })
 
 console.log('origin:', origin)
 
@@ -106,5 +68,7 @@ app.use(errorHandler)
 
 app.listen(PORT, async () => {
     await databaseConnection()
-    logger.info(`Server is running on http://localhost:${PORT}`)
+    console.log(`Server is running on http://localhost:${PORT}`)
 })
+
+exports.api = functions.https.onRequest(app)

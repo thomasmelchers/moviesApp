@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import catchAsync from '../utils/catchAsync'
 import MoviesAppError from '../utils/moviesAppError'
-import logger from '../utils/logger'
 
 const authentication = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
@@ -12,8 +11,6 @@ const authentication = catchAsync(
         const REFRESH_TOKEN_KEY = process.env.REFRESH_TOKEN_KEY || null
 
         const { username, password } = req.body
-
-        logger.info({ username, ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY })
 
         if (!username || !password) {
             return next(
@@ -64,8 +61,6 @@ const authentication = catchAsync(
             // Saving refreshToken with current user
             foundUser.refreshToken = refreshToken
             const result = await foundUser.save()
-
-            logger.info(result)
 
             // Creates Secure Cookie with refresh token
             res.cookie('jwt', refreshToken, {
