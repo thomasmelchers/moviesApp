@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Grid } from '@mui/material'
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined'
-import IMovieData from '../../../interfaces/IMovieDiscoverData'
 import { ProductType } from '../../../types'
 import './productCard.scss'
 

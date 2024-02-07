@@ -7,7 +7,6 @@ import ProductHeader from '../../components/shared/product/ProductHeader'
 import ProductInfo from '../../components/shared/product/ProductInfo'
 import GenresTag from '../../components/shared/product/GenresTag'
 import YoutubeTrailer from '../../components/shared/product/YoutubeTrailer'
-import IMovieData from '../../interfaces/IMovieData'
 import Spinner from '../../components/shared/spinner/Spinner'
 import ITvShowDetail from '../../interfaces/ITvShowDetail'
 
@@ -25,10 +24,8 @@ const TvShow = () => {
             const response = await axios.get(
                 `https://api.themoviedb.org/3/tv/${id}?api_key=${CONSTANTES.TMDB_API_KEY}`,
             )
-            console.log(response.data)
             setTvShow(response.data)
         } catch (error: any) {
-            console.error(error)
             setError(error.message())
             navigate('/*')
         } finally {
@@ -59,7 +56,7 @@ const TvShow = () => {
 
             <>
                 <ProductHeader
-                    title={tvShow.name}
+                    title={tvShow?.name}
                     originalTitle={tvShow.original_name}
                     voteAverage={tvShow.vote_average}
                     id={tvShow.id}
@@ -120,7 +117,7 @@ const TvShow = () => {
                                 <ProductInfo
                                     productType={productType}
                                     productionCompanyName={
-                                        tvShow.production_companies[0].name
+                                        tvShow?.production_companies[0]?.name
                                     }
                                     orginalLanguage={tvShow.original_language}
                                     status={tvShow.status}
