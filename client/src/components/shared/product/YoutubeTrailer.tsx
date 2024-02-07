@@ -18,8 +18,6 @@ const YoutubeTrailer: React.FC<Props> = ({ id, productType }) => {
                 `https://api.themoviedb.org/3/${productType}/${id}/videos?api_key=${CONSTANTES.TMDB_API_KEY}`,
             )
 
-            console.log(response.data.results)
-
             const videoKey = response.data.results.find(
                 (object: any) =>
                     object.type === 'Teaser' || object.type === 'Trailer',
@@ -29,8 +27,6 @@ const YoutubeTrailer: React.FC<Props> = ({ id, productType }) => {
             console.log(error.message)
         }
     }
-
-    console.log('selected', video)
 
     useEffect(() => {
         fetchVideo()

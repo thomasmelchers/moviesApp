@@ -1,0 +1,103 @@
+@import '../../../sass/styles/';
+
+$translateX-value: -35%;
+
+.search {
+    width: 100%;
+}
+
+.search-form {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    border-radius: 25px;
+    background: $quaternary-color-light;
+    // border: 1px solid $secondary-color-light;
+    padding-bottom: 0;
+    height: auto;
+
+    @media screen and (max-width: 767px) {
+        flex-direction: column;
+    }
+}
+
+.background {
+    background-color: $secondary-color-light;
+}
+
+.search-input {
+    flex: 2;
+    padding: 0.75rem;
+    font-size: 16px;
+    border-radius: 25px;
+    border: none;
+    margin-right: 10px;
+    background-color: transparent;
+    transition: ease 0.5s;
+
+    &:hover {
+        padding: 1rem;
+        background-color: $thirnary-color-light;
+    }
+
+    &:focus-visible {
+        outline: none;
+        border-radius: 25px;
+        padding: 1rem;
+        border: 2px solid $thirnary-color-dark;
+        background-color: $quaternary-color-light;
+        transform: translateX($translateX-value);
+
+        @media screen and (max-width: 767px) {
+            transform: none;
+        }
+
+        @media screen and (min-width: 768px) and (max-width: 1023px) {
+            transform: translateX(-45%);
+        }
+    }
+
+    &.typeSelected {
+        background-color: $secondary-color-light;
+    }
+
+    @media screen and (max-width: 767px) {
+        transition: none;
+        margin-bottom: 0.35rem;
+        width: 85%;
+        margin-right: 0;
+    }
+}
+
+.select {
+    flex: 0.5;
+    padding: 0.75em;
+    cursor: pointer;
+    background-color: none;
+
+    @media screen and (max-width: 767px) {
+        width: 60%;
+        margin-top: 0.35rem;
+    }
+}
+
+.search-vl {
+    border-left: 1px solid #ddd;
+    height: 2.5rem;
+    margin-right: 10px;
+
+    @media screen and (max-width: 767px) {
+        display: none;
+    }
+}
+
+.search-button {
+    flex: 0.2;
+    font-size: 1.5em;
+    border-radius: 25px;
+
+    @media screen and (max-width: 767px) {
+        width: 90%;
+        margin-bottom: 0.5rem;
+    }
+}

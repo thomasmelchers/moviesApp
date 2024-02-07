@@ -5,6 +5,7 @@ import useTMDBApiGenres from '../../hooks/useTMDBApiGenres'
 import ProductsTypeRow from '../../components/shared/productsTypeRow/ProductsTypeRow'
 import IProductGenres from '../../interfaces/IProductsGenres'
 import { ProductType } from '../../types'
+import HandleSearch from '../../components/shared/search/HandleSearch'
 
 interface IFormattedGenres {
     id: number
@@ -70,6 +71,7 @@ const Home = () => {
             justifyContent="center"
             alignItems="center"
         >
+            <HandleSearch />
             {error ? <p>{error}</p> : null}
             {loading && !error ? <Spinner /> : rowsOfMovies}
         </Grid>

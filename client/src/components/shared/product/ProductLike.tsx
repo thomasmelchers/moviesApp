@@ -60,7 +60,6 @@ const ProductLike: React.FC<Props> = ({ productId, productType }) => {
     }
 
     useEffect(() => {
-        console.log('useEffect on')
         getMovieslikes()
     }, [isLikeUpdated])
 
