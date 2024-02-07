@@ -82,6 +82,11 @@ const ProductsTypeRow: React.FC<Props> = ({
         }
     }
 
+    const link =
+        productType === 'movie'
+            ? `/movies/${productsTypeName}-${String(productsTypeGenreId)}`
+            : `/tv-shows/${productsTypeName}-${String(productsTypeGenreId)}`
+
     return (
         <Grid
             container
@@ -95,7 +100,7 @@ const ProductsTypeRow: React.FC<Props> = ({
             className="paper"
         >
             <div className="category-title">
-                <Link to={`${productsTypeName}-${String(productsTypeGenreId)}`}>
+                <Link to={link}>
                     <h2>{productsTypeName}</h2>
                 </Link>
             </div>
