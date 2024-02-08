@@ -8,3 +8,9 @@
     margin-right: 0.5rem;
     font-weight: 600;
 }
+
+@media screen and (max-width: 767px) {
+    .extra-margin-top {
+        margin-top: 0.3rem;
+    }
+}

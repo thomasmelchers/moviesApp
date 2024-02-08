@@ -94,10 +94,11 @@ const TvShow = () => {
                             item
                             xs={12}
                         >
-                            {tvShow?.genres.map((genre) => (
+                            {tvShow?.genres.map((genre, index) => (
                                 <GenresTag
                                     key={genre.id}
                                     genreName={genre.name}
+                                    index={index}
                                 />
                             ))}
                         </Grid>

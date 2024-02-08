@@ -8,6 +8,7 @@ import { VideocamRounded } from '@mui/icons-material'
 import PersonRoundedIcon from '@mui/icons-material/PersonRounded'
 import LiveTvRoundedIcon from '@mui/icons-material/LiveTvRounded'
 import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded'
+import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined'
 import './navBar.scss'
 
 const NavBar = () => {
@@ -40,6 +41,7 @@ const NavBar = () => {
                         <Link to="/home">Home</Link>
                         <Link to="/movies">Movies</Link>
                         <Link to="/tv-shows">Series</Link>
+                        <Link to="/favorites">Favorites</Link>
                         <Link to={`/profile/${auth.id}`}>Profile</Link>
                         <button onClick={signOut}>Logout</button>
                     </div>
@@ -70,6 +72,9 @@ const NavBar = () => {
                         </Link>
                         <Link to="/tv-shows">
                             <LiveTvRoundedIcon />
+                        </Link>
+                        <Link to="/favorites">
+                            <FavoriteOutlinedIcon />
                         </Link>
                         <Link to={`/profile/${auth.id}`}>
                             <PersonRoundedIcon />

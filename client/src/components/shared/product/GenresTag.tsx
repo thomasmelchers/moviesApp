@@ -3,12 +3,15 @@ import './genresTag.scss'
 
 interface Props {
     genreName: string
+    index: number
 }
 
-const GenresTag: React.FC<Props> = ({ genreName }) => {
+const GenresTag: React.FC<Props> = ({ genreName, index }) => {
     return (
         <div>
-            <p className="movieGenre">{genreName}</p>
+            <p className={`movieGenre ${index >= 3 ? 'extra-margin-top' : ''}`}>
+                {genreName}
+            </p>
         </div>
     )
 }
