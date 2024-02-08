@@ -50,6 +50,7 @@ const TvShow = () => {
             md={10}
             lg={8}
             p={3}
+            mb={{ xs: '10vh', md: 0 }}
             className="paper"
         >
             {error ? <p>{error}</p> : null}
