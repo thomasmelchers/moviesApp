@@ -51,7 +51,7 @@ const TvShowsGenre = () => {
             p={3}
             item
             xs={11}
-            mb={4}
+            mb={{ xs: '10vh', md: 4 }}
             className="paper"
         >
             <div className="category-title">

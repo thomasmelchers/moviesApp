@@ -70,6 +70,7 @@ const Home = () => {
             flexDirection="column"
             justifyContent="center"
             alignItems="center"
+            pb={{ xs: '10vh', md: 0 }}
         >
             <HandleSearch />
             {error ? <p>{error}</p> : null}

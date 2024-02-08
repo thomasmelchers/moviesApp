@@ -27,6 +27,7 @@ const Movies = () => {
             flexDirection="column"
             justifyContent="center"
             alignItems="center"
+            mb={{ xs: '10vh', md: 0 }}
         >
             {error ? <p>{error}</p> : null}
             {loading && !error ? <Spinner /> : rowsOfMovies}
