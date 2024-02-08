@@ -84,9 +84,19 @@ const Movie = () => {
                     <YoutubeTrailer id={id} productType={productType} />
                 </Grid>
                 <Grid container mt={2}>
-                    <Grid container justifyContent="flex-start" item xs={12}>
-                        {movie.genres.map((genre) => (
-                            <GenresTag key={genre.id} genreName={genre.name} />
+                    <Grid
+                        container
+                        justifyContent="flex-start"
+                        flexWrap="wrap"
+                        item
+                        xs={12}
+                    >
+                        {movie.genres.map((genre, index) => (
+                            <GenresTag
+                                key={index}
+                                genreName={genre.name}
+                                index={index}
+                            />
                         ))}
                     </Grid>
 
@@ -103,7 +113,7 @@ const Movie = () => {
                             <ProductInfo
                                 productType={productType}
                                 productionCompanyName={
-                                    movie.production_companies[0].name
+                                    movie?.production_companies[0]?.name
                                 }
                                 orginalLanguage={movie.original_language}
                                 status={movie.status}
