@@ -39,6 +39,8 @@ const useTMDBApiGenres = (
                 console.error(error)
                 setError('Error fetching genres')
                 setLoading(false)
+            } finally {
+                setLoading(false)
             }
         }
 
