@@ -109,7 +109,7 @@ const ProductsTypeRow: React.FC<Props> = ({
             ) : (
                 <Grid
                     container
-                    justifyContent={{ xs: 'center', md: 'space-between' }}
+                    justifyContent={{ xs: 'center', md: 'space-evenly' }}
                     flexDirection="row"
                     alignItems="center"
                     flexWrap="wrap"
