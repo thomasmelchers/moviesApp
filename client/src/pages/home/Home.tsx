@@ -73,8 +73,12 @@ const Home = () => {
             pb={{ xs: '10vh', md: 0 }}
         >
             <HandleSearch />
-            {error ? <p>{error}</p> : null}
-            {loading && !error ? <Spinner /> : rowsOfMovies}
+            {error || tvShowError ? <p>{error || tvShowError}</p> : null}
+            {loading && tvShowLoading && !error && !tvShowError ? (
+                <Spinner />
+            ) : (
+                rowsOfMovies
+            )}
         </Grid>
     )
 }
