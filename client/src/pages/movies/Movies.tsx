@@ -2,6 +2,7 @@ import { Grid } from '@mui/material'
 import useTMDBApiGenres from '../../hooks/useTMDBApiGenres'
 import Spinner from '../../components/shared/spinner/Spinner'
 import ProductsTypeRow from '../../components/shared/productsTypeRow/ProductsTypeRow'
+import Filters from '../../components/shared/filters/Filters'
 
 const Movies = () => {
     const productType = 'movie'
@@ -30,7 +31,14 @@ const Movies = () => {
             mb={{ xs: '10vh', md: 0 }}
         >
             {error ? <p>{error}</p> : null}
-            {loading && !error ? <Spinner /> : rowsOfMovies}
+            {loading && !error ? (
+                <Spinner />
+            ) : (
+                <>
+                    <Filters productType={productType} />
+                    {rowsOfMovies}
+                </>
+            )}
         </Grid>
     )
 }

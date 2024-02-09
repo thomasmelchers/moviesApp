@@ -1,0 +1,19 @@
+@import '../../../sass/styles/';
+
+.filter {
+    margin: 0.5rem;
+
+    button {
+        border: 1px solid $thirnary-color-main;
+        // background-color: $quaternary-color-light;
+        background-color: transparent;
+        // color: $primary-color-main;
+        color: $quaternary-color-light;
+
+        &:hover {
+            background-color: $quaternary-color-light;
+            color: $primary-color-main;
+            border-color: $quaternary-color-light;
+        }
+    }
+}
