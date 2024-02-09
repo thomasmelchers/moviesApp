@@ -25,7 +25,7 @@ const Home = () => {
         loading: tvShowLoading,
         error: tvShowError,
         listOfSelectedGenres: genresTvShowSelected,
-    } = useTMDBApiGenres('tv', 3)
+    } = useTMDBApiSelectedGenres('tv', 3)
 
     const getGenres = (
         genresSelected: IProductGenres[],
