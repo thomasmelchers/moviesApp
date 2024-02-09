@@ -106,8 +106,9 @@ const ProductsTypeRow: React.FC<Props> = ({
             className="paper"
         >
             <div className="category-title">
-                <Link to={link}>
+                <Link to={link} className="category-title__link">
                     <h2>{productsTypeName}</h2>
+                    <span className="explore-text">Explore All &gt;</span>
                 </Link>
             </div>
             {loading ? (

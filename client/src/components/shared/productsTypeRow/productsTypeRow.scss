@@ -6,11 +6,35 @@
 }
 
 .category-title {
-    width: 100%;
+    width: auto;
     margin-bottom: 1rem;
-}
 
-h2 {
-    font-size: 1.5rem;
-    color: $primary-color-main;
+    a {
+        text-decoration: none;
+        position: relative;
+
+        &:hover {
+            .explore-text {
+                opacity: 1;
+                transform: translateX(0.7rem);
+            }
+        }
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        color: $thirnary-color-dark;
+    }
+    .explore-text {
+        width: 500%;
+        position: absolute;
+        color: $primary-color-main;
+        font-size: medium;
+        bottom: 0;
+        left: 100%;
+        opacity: 0;
+        transition:
+            opacity 0.7s ease-in,
+            transform 0.5s ease-in;
+    }
 }
