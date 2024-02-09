@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid } from '@mui/material'
 import Spinner from '../../components/shared/spinner/Spinner'
-import useTMDBApiGenres from '../../hooks/useTMDBApiGenres'
+import useTMDBApiSelectedGenres from '../../hooks/useTMDBApiSelectedGenres'
 import ProductsTypeRow from '../../components/shared/productsTypeRow/ProductsTypeRow'
 import IProductGenres from '../../interfaces/IProductsGenres'
 import { ProductType } from '../../types'
@@ -19,7 +19,7 @@ const Home = () => {
         loading,
         error,
         listOfSelectedGenres: genresMovieSelected,
-    } = useTMDBApiGenres('movie', 3)
+    } = useTMDBApiSelectedGenres('movie', 3)
 
     const {
         loading: tvShowLoading,

@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material'
-import useTMDBApiGenres from '../../hooks/useTMDBApiGenres'
+import useTMDBApiSelectedGenres from '../../hooks/useTMDBApiSelectedGenres'
 import ProductsTypeRow from '../../components/shared/productsTypeRow/ProductsTypeRow'
 import Spinner from '../../components/shared/spinner/Spinner'
 import Filters from '../../components/shared/filters/Filters'
@@ -8,7 +8,7 @@ import './tvShows.scss'
 const TvShows = () => {
     const productType = 'tv'
 
-    const { loading, error, listOfSelectedGenres } = useTMDBApiGenres(
+    const { loading, error, listOfSelectedGenres } = useTMDBApiSelectedGenres(
         productType,
         5,
     )
