@@ -72,7 +72,19 @@ const Home = () => {
             alignItems="center"
             pb={{ xs: '10vh', md: 0 }}
         >
-            <HandleSearch />
+            <Grid
+                container
+                flexDirection="row"
+                justifyContent="center"
+                alignItems="center"
+                p={3}
+                mb={2}
+                className="search"
+            >
+                <Grid item xs={12} sm={8} md={6} lg={5}>
+                    <HandleSearch />
+                </Grid>
+            </Grid>
             {error || tvShowError ? <p>{error || tvShowError}</p> : null}
             {loading && tvShowLoading && !error && !tvShowError ? (
                 <Spinner />

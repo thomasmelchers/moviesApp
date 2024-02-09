@@ -44,9 +44,10 @@ $translateX-value: -35%;
         outline: none;
         border-radius: 25px;
         padding: 1rem;
-        border: 2px solid $thirnary-color-dark;
+        border: 4px solid $thirnary-color-dark;
         background-color: $quaternary-color-light;
         transform: translateX($translateX-value);
+        z-index: 99;
 
         @media screen and (max-width: 767px) {
             transform: none;

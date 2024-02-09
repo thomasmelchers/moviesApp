@@ -52,7 +52,8 @@
 
     a:hover {
         color: $thirnary-color-main;
-        transition: color 0.3s ease;
+        transform: scale(1.1);
+        transition: 0.5s ease;
     }
 }
 
@@ -71,6 +72,17 @@
     background-color: $background-color;
     height: 10vh;
     border-top: 3px solid $thirnary-color-main;
+}
+
+.search_button {
+    color: $thirnary-color-main;
+    cursor: pointer;
+
+    &:hover {
+        color: $thirnary-color-dark;
+        transform: scale(1.1);
+        transition: 0.5s ease;
+    }
 }
 
 .link__xs {

@@ -54,7 +54,7 @@ const Search = () => {
 
     useEffect(() => {
         fetchMovies()
-    }, [])
+    }, [query, type])
 
     console.log(tvShowResults?.map((r) => r.name))
 
