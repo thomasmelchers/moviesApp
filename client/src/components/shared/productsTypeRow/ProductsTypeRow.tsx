@@ -82,6 +82,12 @@ const ProductsTypeRow: React.FC<Props> = ({
         }
     }
 
+    // Handling Sci-Fi & Fantasy genre link issue
+    productsTypeName =
+        productType === 'tv' && productsTypeGenreId === 10765
+            ? 'Sci Fi & Fantasy'
+            : productsTypeName
+
     const link =
         productType === 'movie'
             ? `/movies/${productsTypeName}-${String(productsTypeGenreId)}`
