@@ -4,7 +4,7 @@ import CONSTANTES from '../utils/constantes'
 import IProductGenres from '../interfaces/IProductsGenres'
 import { ProductType } from '../types'
 
-const useTMDBApiGenres = (
+const useTMDBApiSelectedGenres = (
     productType: ProductType,
     nbGenresSelected: number,
 ) => {
@@ -67,4 +67,4 @@ const selectRandomGenres = (
     return shuffledArray.slice(0, count)
 }
 
-export default useTMDBApiGenres
+export default useTMDBApiSelectedGenres

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid } from '@mui/material'
 import Spinner from '../../components/shared/spinner/Spinner'
-import useTMDBApiGenres from '../../hooks/useTMDBApiGenres'
+import useTMDBApiSelectedGenres from '../../hooks/useTMDBApiSelectedGenres'
 import ProductsTypeRow from '../../components/shared/productsTypeRow/ProductsTypeRow'
 import IProductGenres from '../../interfaces/IProductsGenres'
 import { ProductType } from '../../types'
@@ -19,13 +19,13 @@ const Home = () => {
         loading,
         error,
         listOfSelectedGenres: genresMovieSelected,
-    } = useTMDBApiGenres('movie', 3)
+    } = useTMDBApiSelectedGenres('movie', 3)
 
     const {
         loading: tvShowLoading,
         error: tvShowError,
         listOfSelectedGenres: genresTvShowSelected,
-    } = useTMDBApiGenres('tv', 3)
+    } = useTMDBApiSelectedGenres('tv', 3)
 
     const getGenres = (
         genresSelected: IProductGenres[],
@@ -72,9 +72,25 @@ const Home = () => {
             alignItems="center"
             pb={{ xs: '10vh', md: 0 }}
         >
-            <HandleSearch />
-            {error ? <p>{error}</p> : null}
-            {loading && !error ? <Spinner /> : rowsOfMovies}
+            <Grid
+                container
+                flexDirection="row"
+                justifyContent="center"
+                alignItems="center"
+                p={3}
+                mb={2}
+                className="search"
+            >
+                <Grid item xs={12} sm={8} md={6} lg={5}>
+                    <HandleSearch />
+                </Grid>
+            </Grid>
+            {error || tvShowError ? <p>{error || tvShowError}</p> : null}
+            {loading && tvShowLoading && !error && !tvShowError ? (
+                <Spinner />
+            ) : (
+                rowsOfMovies
+            )}
         </Grid>
     )
 }
