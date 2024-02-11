@@ -11,8 +11,6 @@ interface Props {
 const Filters: React.FC<Props> = ({ productType }) => {
     const { genres, error } = useGenres(productType)
 
-    console.log(genres)
-
     return (
         <Grid
             container
