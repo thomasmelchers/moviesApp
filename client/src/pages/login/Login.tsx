@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import axios from '../../api/axios'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { TextField, Grid } from '@mui/material'
+import Spinner from '../../components/shared/spinner/Spinner'
 import useAuth from '../../hooks/useAuth'
 import URL from '../../api/routes'
 import './login.scss'
@@ -19,6 +20,8 @@ const Login = () => {
     const [username, setUsername] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [errorMessage, setErrorMessage] = useState<string>('')
+
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     useEffect(() => {
         if (usernameRef.current) {
@@ -41,17 +44,13 @@ const Login = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        setIsLoading(true)
 
         try {
-            const response = await axios.post(
-                URL.login,
-                JSON.stringify({ username, password }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true,
-                },
-            )
-            console.log(response.data)
+            const response = await axios.post(URL.login, JSON.stringify({ username, password }), {
+                headers: { 'Content-Type': 'application/json' },
+                withCredentials: true,
+            })
             const id = response?.data?.id
             const accessToken = response?.data?.accessToken
             const auth = {
@@ -62,8 +61,10 @@ const Login = () => {
             setAuth(auth)
             setUsername('')
             setPassword('')
+            setIsLoading(false)
             navigate(from, { replace: true })
         } catch (error: any) {
+            setIsLoading(false)
             if (!error?.response) {
                 setErrorMessage('No server response, try it later!')
             } else if (error.response?.status === 400) {
@@ -81,86 +82,74 @@ const Login = () => {
     }
 
     return (
-        <Grid
-            container
-            flexDirection="column"
-            item
-            xs={10}
-            md={6}
-            lg={4}
-            p={3}
-            className="login__container"
-        >
-            <section>
-                <h1>Login</h1>
+        <Grid container flexDirection="column" item xs={10} md={6} lg={4} p={3} className="login__container">
+            {isLoading ? (
+                <Spinner />
+            ) : (
+                <section>
+                    <h1>Login</h1>
 
-                <form onSubmit={handleSubmit}>
-                    {errorMessage ? (
+                    <form onSubmit={handleSubmit}>
+                        {errorMessage ? (
+                            <div className="form__layout">
+                                <p className="error">{errorMessage}</p>
+                            </div>
+                        ) : null}
+
                         <div className="form__layout">
-                            <p className="error">{errorMessage}</p>
-                        </div>
-                    ) : null}
-
-                    <div className="form__layout">
-                        <TextField
-                            type="text"
-                            id="username"
-                            label="Username"
-                            variant="filled"
-                            size="small"
-                            onChange={(e) => setUsername(e.target.value)}
-                            value={username}
-                            inputRef={usernameRef}
-                            required
-                            autoComplete="off"
-                            fullWidth
-                        />
-                    </div>
-
-                    <div className="form__layout">
-                        <TextField
-                            type="password"
-                            id="password"
-                            label="Password"
-                            variant="filled"
-                            size="small"
-                            onChange={(e) => setPassword(e.target.value)}
-                            value={password}
-                            required
-                            autoComplete="off"
-                            fullWidth
-                        />
-                    </div>
-
-                    <div className="form__layout">
-                        <div className="persistCheck">
-                            <input
-                                type="checkbox"
-                                id="perist"
-                                onChange={togglePersist}
-                                checked={persist}
+                            <TextField
+                                type="text"
+                                id="username"
+                                label="Username"
+                                variant="filled"
+                                size="small"
+                                onChange={(e) => setUsername(e.target.value)}
+                                value={username}
+                                inputRef={usernameRef}
+                                required
+                                autoComplete="off"
+                                fullWidth
                             />
-                            <label htmlFor="persist">
-                                Save your credentials on this device
-                            </label>
                         </div>
-                    </div>
 
-                    <div className="form__layout">
-                        <button>Sign In</button>
-                    </div>
+                        <div className="form__layout">
+                            <TextField
+                                type="password"
+                                id="password"
+                                label="Password"
+                                variant="filled"
+                                size="small"
+                                onChange={(e) => setPassword(e.target.value)}
+                                value={password}
+                                required
+                                autoComplete="off"
+                                fullWidth
+                            />
+                        </div>
 
-                    <div className="form__layout">
-                        <p className="register_link_label">
-                            Need an Account?
-                            <br />
-                            <span>
-                                <Link to={URL.register}>Register</Link>
-                            </span>
-                        </p>
-                    </div>
-                </form>
-            </section>
+                        <div className="form__layout">
+                            <div className="persistCheck">
+                                <input type="checkbox" id="perist" onChange={togglePersist} checked={persist} />
+                                <label htmlFor="persist">Save your credentials on this device</label>
+                            </div>
+                        </div>
+
+                        <div className="form__layout">
+                            <button>Sign In</button>
+                        </div>
+
+                        <div className="form__layout">
+                            <p className="register_link_label">
+                                Need an Account?
+                                <br />
+                                <span>
+                                    <Link to={URL.register}>Register</Link>
+                                </span>
+                            </p>
+                        </div>
+                    </form>
+                </section>
+            )}
         </Grid>
     )
 }

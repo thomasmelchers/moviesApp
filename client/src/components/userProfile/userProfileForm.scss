@@ -39,9 +39,9 @@
 }
 
 .success {
-    background-color: #55efc4;
-    border: 1px solid #00b894;
-    color: #00b894;
+    background-color: $success-background-color;
+    border: $success-border-color;
+    color: $success-text-color;
 }
 
 .error {

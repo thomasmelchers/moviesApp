@@ -41,46 +41,22 @@ function App() {
                 <Route element={<PersistLogin />}>
                     {/* PROTECTED ROUTE */}
                     {/* User routes */}
-                    <Route
-                        element={
-                            <RequireAuth
-                                allowedRoles={[
-                                    ROLES.admin,
-                                    ROLES.editor,
-                                    ROLES.user,
-                                ]}
-                            />
-                        }
-                    >
+                    <Route element={<RequireAuth allowedRoles={[ROLES.admin, ROLES.editor, ROLES.user]} />}>
                         <Route path="home" element={<Home />} />
-                        <Route
-                            path="profile/:id"
-                            element={<UserProfilePage />}
-                        />
+                        <Route path="profile/:id" element={<UserProfilePage />} />
                         <Route path="movies" element={<Movies />} />
-                        <Route
-                            path="movies/:movieGenre"
-                            element={<MoviesGenre />}
-                        />
+                        <Route path="movies/:movieGenre" element={<MoviesGenre />} />
                         <Route path="movie/:id" element={<Movie />} />
                         <Route path="tv-shows" element={<TvShows />} />
-                        <Route
-                            path="tv-shows/:tvShowGenre"
-                            element={<TvShowsGenre />}
-                        />
+                        <Route path="tv-shows/:tvShowGenre" element={<TvShowsGenre />} />
                         <Route path="tv-show/:id" element={<TvShow />} />
                         <Route path="search" element={<Search />} />
                         <Route path="favorites" element={<Favorites />} />
                     </Route>
 
                     {/* Admin routes */}
-                    <Route
-                        element={<RequireAuth allowedRoles={[ROLES.admin]} />}
-                    >
-                        <Route
-                            path="admin-dashboard"
-                            element={<AdminDashboard />}
-                        />
+                    <Route element={<RequireAuth allowedRoles={[ROLES.admin]} />}>
+                        <Route path="admin-dashboard" element={<AdminDashboard />} />
                     </Route>
 
                     {/* END PERSIST LOGIN */}

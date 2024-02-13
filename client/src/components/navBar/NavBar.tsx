@@ -26,7 +26,6 @@ const NavBar = () => {
 
     const handleOpen = () => {
         setIsModalOpen(true)
-        console.log('open; ', isModalOpen)
     }
 
     const handleClose = () => {
@@ -43,11 +42,7 @@ const NavBar = () => {
                         </div>
                     </Link>
                 </Grid>
-                <Grid
-                    item
-                    sx={{ display: { xs: 'none', md: 'flex' } }}
-                    className="menu"
-                >
+                <Grid item sx={{ display: { xs: 'none', md: 'flex' } }} className="menu">
                     {auth?.username ? (
                         <div className="menu__container">
                             <Link to="/home">Home</Link>
@@ -55,10 +50,7 @@ const NavBar = () => {
                             <Link to="/tv-shows">Series</Link>
                             <Link to="/favorites">Favorites</Link>
                             <Link to={`/profile/${auth.id}`}>Profile</Link>
-                            <SearchIcon
-                                onClick={handleOpen}
-                                className="search_button"
-                            />
+                            <SearchIcon onClick={handleOpen} className="search_button" />
                             <button onClick={signOut}>Logout</button>
                         </div>
                     ) : (
@@ -95,15 +87,9 @@ const NavBar = () => {
                             <Link to={`/profile/${auth.id}`}>
                                 <PersonRoundedIcon />
                             </Link>
-                            <SearchIcon
-                                onClick={handleOpen}
-                                className="search_button"
-                            />
+                            <SearchIcon onClick={handleOpen} className="search_button" />
 
-                            <ExitToAppRoundedIcon
-                                onClick={signOut}
-                                className="logout"
-                            />
+                            <ExitToAppRoundedIcon onClick={signOut} className="logout" />
                         </div>
                     ) : (
                         <div className="menu__container__not-login">
