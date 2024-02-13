@@ -1,92 +1,102 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useCallback, useRef, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import axios from 'axios'
-import CONSTANTES from '../../utils/constantes'
-import IMovieDetail from '../../interfaces/IMovieData'
-import ProductCard from '../../components/shared/productCard/ProductCard'
 import { Grid } from '@mui/material'
-import Spinner from '../../components/shared/spinner/Spinner'
+import { ProductType } from '../../types'
 import ITvShowDetail from '../../interfaces/ITvShowDetail'
+import IMovieDetail from '../../interfaces/IMovieData'
+import Spinner from '../../components/shared/spinner/Spinner'
+import useSearchMovies from '../../hooks/useSearchMovies'
+import ProductCard from '../../components/shared/productCard/ProductCard'
 import './search.scss'
 
 const Search = () => {
     const location = useLocation()
-    const [loading, setLoading] = useState<boolean>(true)
-    const [moviesResults, setMoviesResults] = useState<IMovieDetail[]>()
-    const [tvShowResults, setTvShowResults] = useState<ITvShowDetail[]>()
-    const [error, setError] = useState<string>()
-
     const queryParams = new URLSearchParams(location.search)
-    const query = queryParams.get('query')
-    const type = queryParams.get('type')
+    const initialQuery = queryParams.get('query') || ''
+    const type = (queryParams.get('type') as ProductType) || 'movie'
 
-    const MOVIE_URL = `https://api.themoviedb.org/3/search/movie?query=${query}&api_key=${CONSTANTES.TMDB_API_KEY}`
-    const TV_SHOW_URL = `https://api.themoviedb.org/3/search/tv?query=${query}&api_key=${CONSTANTES.TMDB_API_KEY}`
-    const url = type === 'movie' ? MOVIE_URL : type === 'tv' ? TV_SHOW_URL : ''
+    const { isLoading, isError, error, moviesResults, tvShowsResults, hasNextPage, setPageNum } = useSearchMovies(
+        initialQuery,
+        type,
+    )
 
-    const fetchMovies = async () => {
-        try {
-            const response = await axios.get(url)
+    const intObserver = useRef<IntersectionObserver | null>()
+    const lastElementRef = useCallback(
+        (element: HTMLDivElement | null) => {
+            if (isLoading || !element) return
 
-            type === 'movie'
-                ? setMoviesResults(
-                      response.data.results.filter(
-                          (r: IMovieDetail) => r.poster_path,
-                      ),
-                  )
-                : type === 'tv'
-                  ? setTvShowResults(
-                        response.data.results.filter(
-                            (t: ITvShowDetail) => t.poster_path,
-                        ),
-                    )
-                  : console.error('type is missing')
-        } catch (error: any) {
-            if (error.code === 'ERR_BAD_REQUEST') {
-                setError(`Nothing has been found for this research: ${query}`)
-            } else {
-                setError(error.message)
+            if (intObserver.current) {
+                intObserver.current.disconnect()
             }
-        } finally {
-            setLoading(false)
+
+            intObserver.current = new IntersectionObserver((posts) => {
+                if (posts[0].isIntersecting && hasNextPage) {
+                    console.log('we are near the last post!')
+                    setPageNum((prev) => prev + 1)
+                }
+            })
+
+            if (element) intObserver.current.observe(element)
+        },
+        [isLoading, hasNextPage],
+    )
+    const moviesContent = moviesResults.map((movie: IMovieDetail, index) => {
+        // last element
+        if (moviesResults.length === index + 1) {
+            return (
+                <ProductCard
+                    key={movie.id}
+                    ref={lastElementRef}
+                    productType="movie"
+                    productId={movie.id}
+                    productTitle={movie.title}
+                    productPosterPath={movie.poster_path}
+                    productVoteAverage={movie.vote_average}
+                />
+            )
         }
-    }
 
-    useEffect(() => {
-        fetchMovies()
-    }, [query, type])
+        return (
+            <ProductCard
+                key={movie.id}
+                productType="movie"
+                productId={movie.id}
+                productTitle={movie.title}
+                productPosterPath={movie.poster_path}
+                productVoteAverage={movie.vote_average}
+            />
+        )
+    })
 
-    console.log(tvShowResults?.map((r) => r.name))
+    const tvShowsContent = tvShowsResults.map((tvShow: ITvShowDetail, index) => {
+        // last element
+        if (tvShowsResults.length === index + 1) {
+            return (
+                <ProductCard
+                    key={tvShow.id}
+                    ref={lastElementRef}
+                    productType="tv"
+                    productId={tvShow.id}
+                    productTitle={tvShow.name}
+                    productPosterPath={tvShow.poster_path}
+                    productVoteAverage={tvShow.vote_average}
+                />
+            )
+        }
 
-    const moviesResultsData = moviesResults?.map((movie) => (
-        <ProductCard
-            key={movie.id}
-            productType="movie"
-            productId={movie.id}
-            productTitle={movie.title}
-            productPosterPath={movie.poster_path}
-            productVoteAverage={movie.vote_average}
-        />
-    ))
+        return (
+            <ProductCard
+                key={tvShow.id}
+                productType="tv"
+                productId={tvShow.id}
+                productTitle={tvShow.name}
+                productPosterPath={tvShow.poster_path}
+                productVoteAverage={tvShow.vote_average}
+            />
+        )
+    })
 
-    const tvResultsData = tvShowResults?.map((tvShow) => (
-        <ProductCard
-            key={tvShow.id}
-            productType="tv"
-            productId={tvShow.id}
-            productTitle={tvShow.name}
-            productPosterPath={tvShow.poster_path}
-            productVoteAverage={tvShow.vote_average}
-        />
-    ))
-
-    const results =
-        type === 'movie'
-            ? moviesResultsData
-            : type === 'tv'
-              ? tvResultsData
-              : null
-
+    const content = type === 'movie' ? moviesContent : tvShowsContent
     return (
         <Grid
             container
@@ -100,23 +110,21 @@ const Search = () => {
             className="paper"
         >
             <div className="search__title">
-                <h2>{query}</h2>
+                <h2>{initialQuery}</h2>
             </div>
-            {error ? <p>{error}</p> : null}
-            {loading ? (
-                <Spinner />
-            ) : (
-                <Grid
-                    container
-                    justifyContent={{ xs: 'center', md: 'space-between' }}
-                    flexDirection="row"
-                    alignItems="center"
-                    flexWrap="wrap"
-                    width="100%"
-                >
-                    {results}
-                </Grid>
-            )}
+            {isError ? <p>{error?.message}</p> : null}
+
+            <Grid
+                container
+                justifyContent={{ xs: 'center', md: 'space-between' }}
+                flexDirection="row"
+                alignItems="center"
+                flexWrap="wrap"
+                width="100%"
+            >
+                {content}
+                {isLoading ? <Spinner /> : null}
+            </Grid>
         </Grid>
     )
 }
