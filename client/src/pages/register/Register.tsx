@@ -5,6 +5,7 @@ import axios from '../../api/axios'
 import { Grid } from '@mui/material'
 import URL from '../../api/routes'
 import './register.scss'
+import Spinner from '../../components/shared/spinner/Spinner'
 
 // User regex : must start with lower or uppercase letter
 // Then be followed by 3 to 23 characters (letters or digits)
@@ -21,54 +22,57 @@ const Register = () => {
     const usernameRef = useRef<HTMLElement>()
     const errRef = useRef<HTMLElement>()
 
-    const [username, setUsername] = useState('')
-    const [validUsername, setValidUsername] = useState(false)
-    const [usernameFocus, setUsernameFocus] = useState(false)
+    const [username, setUsername] = useState<string>('')
+    const [validUsername, setValidUsername] = useState<boolean>(false)
+    const [usernameFocus, setUsernameFocus] = useState<boolean>(false)
 
-    const [email, setEmail] = useState('')
-    const [validEmail, setValidEmail] = useState(false)
-    const [emailFocus, setEmailFocus] = useState(false)
+    const [email, setEmail] = useState<string>('')
+    const [validEmail, setValidEmail] = useState<boolean>(false)
+    const [emailFocus, setEmailFocus] = useState<boolean>(false)
 
-    const [password, setPassword] = useState('')
-    const [validPassword, setValidPassword] = useState(false)
-    const [passwordFocus, setPasswordFocus] = useState(false)
+    const [password, setPassword] = useState<string>('')
+    const [validPassword, setValidPassword] = useState<boolean>(false)
+    const [passwordFocus, setPasswordFocus] = useState<boolean>(false)
 
-    const [matchPassword, setMatchPassword] = useState('')
-    const [validMatch, setValidMatch] = useState(false)
-    const [matchFocus, setMatchFocus] = useState(false)
+    const [matchPassword, setMatchPassword] = useState<string>('')
+    const [validMatch, setValidMatch] = useState<boolean>(false)
+    const [matchFocus, setMatchFocus] = useState<boolean>(false)
 
-    const [errMsg, setErrMsg] = useState('')
-    const [success, setSuccess] = useState(false)
+    const [errMessage, setErrMessage] = useState<string>('')
+    const [success, setSuccess] = useState<boolean>(false)
+
+    const [isLoading, setIsLoading] = useState<boolean>(false)
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-
+        setIsLoading(true)
         try {
-            const response = await axios.post(
-                URL.register,
-                JSON.stringify({ username, password, email }),
-                {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true,
-                },
-            )
+            const response = await axios.post(URL.register, JSON.stringify({ username, password, email }), {
+                headers: { 'Content-Type': 'application/json' },
+                withCredentials: true,
+            })
             console.log(response.data)
-            // console.log(response.accessToken)
             setSuccess(true)
-            //clear state and controlled inputs
-            //need value attrib on inputs for this
             setUsername('')
             setPassword('')
             setMatchPassword('')
             setEmail('')
+            setIsLoading(false)
         } catch (err: any) {
+            setIsLoading(false)
             console.error(err)
             if (!err?.response) {
-                setErrMsg('No Server Response')
+                setErrMessage('No Server Response')
             } else if (err.response?.status === 409) {
-                setErrMsg('Username Taken')
+                setErrMessage('Username Taken')
+            } else if (err.response?.data?.error?.code === 11000) {
+                setErrMessage(
+                    err.response?.data?.error?.keyValue?.email
+                        ? `This email, ${err.response?.data?.error?.keyValue.email}, is already registered. Please find another one!`
+                        : `This username, ${err.response?.data?.error?.keyValue.username}, is already registered. Please find another one!`
+                )
             } else {
-                setErrMsg('Registration Failed')
+                setErrMessage('Registration Failed')
             }
 
             if (errRef.current) {
@@ -99,16 +103,10 @@ const Register = () => {
     }, [password, matchPassword])
 
     useEffect(() => {
-        setErrMsg('')
+        setErrMessage('')
     }, [username, email, password, matchPassword])
 
     return (
-        // <Grid
-        //   container
-        //   flexDirection="column"
-        //   justifyContent="center"
-        //   alignItems="center"
-        // >
         <Grid
             container
             flexDirection="column"
@@ -117,21 +115,27 @@ const Register = () => {
             md={6}
             lg={4}
             p={3}
-            className="register__container"
+            className={!success ? 'register__container' : 'register__container success__container'}
         >
-            {success ? (
-                <section className="success">
+            {isLoading ? <Spinner /> : null}
+            {success && !isLoading ? (
+                <section>
                     <h1>You are successfully registered!</h1>
                     <Link to="/login">
                         <button>Sign In</button>
                     </Link>
                 </section>
-            ) : (
+            ) : null}
+            {!isLoading && !success ? (
                 <section>
                     <h1>Register</h1>
-                    <p>{errMsg}</p>
 
                     <form onSubmit={handleSubmit}>
+                        {errMessage ? (
+                            <div className="form__layout">
+                                <p className="error">{errMessage}</p>
+                            </div>
+                        ) : null}
                         <div className="form__layout">
                             <TextField
                                 type="text"
@@ -150,20 +154,14 @@ const Register = () => {
                                 // Set invalid at the beginning
                                 sx={{ backgroundColor: 'transparent' }}
                                 inputProps={{
-                                    'aria-invalid': validUsername
-                                        ? 'false'
-                                        : 'true',
+                                    'aria-invalid': validUsername ? 'false' : 'true',
                                 }}
                                 // requirement for the form
                                 aria-describedby="uidnote"
                             />
                             <p
                                 id="uidnote"
-                                className={
-                                    usernameFocus && username && !validUsername
-                                        ? 'instructions'
-                                        : 'offscreen'
-                                }
+                                className={usernameFocus && username && !validUsername ? 'instructions' : 'offscreen'}
                             >
                                 4 to 24 characters.
                                 <br />
@@ -186,9 +184,7 @@ const Register = () => {
                                 autoComplete="off"
                                 aria-describedby="emailnote"
                                 inputProps={{
-                                    'aria-invalid': validEmail
-                                        ? 'false'
-                                        : 'true',
+                                    'aria-invalid': validEmail ? 'false' : 'true',
                                 }}
                                 onFocus={() => setEmailFocus(true)}
                                 onBlur={() => setEmailFocus(false)}
@@ -196,11 +192,7 @@ const Register = () => {
                             />
                             <p
                                 id="pwdnote"
-                                className={
-                                    emailFocus && email && !validEmail
-                                        ? 'instructions'
-                                        : 'offscreen'
-                                }
+                                className={emailFocus && email && !validEmail ? 'instructions' : 'offscreen'}
                             >
                                 Need a valid email
                             </p>
@@ -219,35 +211,20 @@ const Register = () => {
                                 autoComplete="off"
                                 aria-describedby="pwdnote"
                                 inputProps={{
-                                    'aria-invalid': validPassword
-                                        ? 'false'
-                                        : 'true',
+                                    'aria-invalid': validPassword ? 'false' : 'true',
                                 }}
                                 onFocus={() => setPasswordFocus(true)}
                                 onBlur={() => setPasswordFocus(false)}
                                 fullWidth
                             />
-                            <p
-                                id="pwdnote"
-                                className={
-                                    passwordFocus && !validPassword
-                                        ? 'instructions'
-                                        : 'offscreen'
-                                }
-                            >
+                            <p id="pwdnote" className={passwordFocus && !validPassword ? 'instructions' : 'offscreen'}>
                                 8 to 24 characters.
                                 <br />
-                                Must include uppercase and lowercase letters, a
-                                number and a special character.
+                                Must include uppercase and lowercase letters, a number and a special character.
                                 <br />
-                                Allowed special characters:{' '}
-                                <span aria-label="exclamation mark">
-                                    !
-                                </span>{' '}
-                                <span aria-label="at symbol">@</span>{' '}
-                                <span aria-label="hashtag">#</span>{' '}
-                                <span aria-label="dollar sign">$</span>{' '}
-                                <span aria-label="percent">%</span>
+                                Allowed special characters: <span aria-label="exclamation mark">!</span>{' '}
+                                <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span>{' '}
+                                <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
                             </p>
                         </div>
 
@@ -258,44 +235,26 @@ const Register = () => {
                                 label="Confirm Password"
                                 variant="filled"
                                 size="small"
-                                onChange={(e) =>
-                                    setMatchPassword(e.target.value)
-                                }
+                                onChange={(e) => setMatchPassword(e.target.value)}
                                 value={matchPassword}
                                 required
                                 autoComplete="off"
                                 aria-describedby="confirmnote"
                                 inputProps={{
-                                    'aria-invalid': validMatch
-                                        ? 'false'
-                                        : 'true',
+                                    'aria-invalid': validMatch ? 'false' : 'true',
                                 }}
                                 onFocus={() => setMatchFocus(true)}
                                 onBlur={() => setMatchFocus(false)}
                                 fullWidth
                             />
-                            <p
-                                id="confirmnote"
-                                className={
-                                    matchFocus && !validMatch
-                                        ? 'instructions'
-                                        : 'offscreen'
-                                }
-                            >
+                            <p id="confirmnote" className={matchFocus && !validMatch ? 'instructions' : 'offscreen'}>
                                 Must match the first password input field.
                             </p>
                         </div>
 
                         <div className="form__layout">
                             <button
-                                disabled={
-                                    !validUsername ||
-                                    !validPassword ||
-                                    !validMatch ||
-                                    !validEmail
-                                        ? true
-                                        : false
-                                }
+                                disabled={!validUsername || !validPassword || !validMatch || !validEmail ? true : false}
                             >
                                 Sign Up
                             </button>
@@ -313,7 +272,7 @@ const Register = () => {
                         </div>
                     </form>
                 </section>
-            )}
+            ) : null}
         </Grid>
     )
 }
