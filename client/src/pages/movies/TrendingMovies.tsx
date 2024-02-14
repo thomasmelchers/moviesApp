@@ -1,24 +1,12 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import React, { useRef, useCallback } from 'react'
 import { Grid } from '@mui/material'
-import { ProductType } from '../../types'
-import ITvShowDetail from '../../interfaces/ITvShowDetail'
-import IMovieDetail from '../../interfaces/IMovieData'
 import Spinner from '../../components/shared/spinner/Spinner'
-import useSearchMovies from '../../hooks/useSearchMovies'
 import ProductCard from '../../components/shared/productCard/ProductCard'
-import './search.scss'
+import IMovieDetail from '../../interfaces/IMovieData'
+import useTrendings from '../../hooks/useTrendings'
 
-const Search = () => {
-    const location = useLocation()
-    const queryParams = new URLSearchParams(location.search)
-    const initialQuery = queryParams.get('query') || ''
-    const type = (queryParams.get('type') as ProductType) || 'movie'
-
-    const { isLoading, isError, error, moviesResults, tvShowsResults, hasNextPage, setPageNum } = useSearchMovies(
-        initialQuery,
-        type
-    )
+const TrendingMovies = () => {
+    const { moviesResults, isLoading, isError, error, hasNextPage, setPageNum } = useTrendings('movie')
 
     const intObserver = useRef<IntersectionObserver | null>()
     const lastElementRef = useCallback(
@@ -40,6 +28,7 @@ const Search = () => {
         },
         [isLoading, hasNextPage]
     )
+
     const moviesContent = moviesResults.map((movie: IMovieDetail, index) => {
         // last element
         if (moviesResults.length === index + 1) {
@@ -68,35 +57,6 @@ const Search = () => {
         )
     })
 
-    const tvShowsContent = tvShowsResults.map((tvShow: ITvShowDetail, index) => {
-        // last element
-        if (tvShowsResults.length === index + 1) {
-            return (
-                <ProductCard
-                    key={tvShow.id}
-                    ref={lastElementRef}
-                    productType="tv"
-                    productId={tvShow.id}
-                    productTitle={tvShow.name}
-                    productPosterPath={tvShow.poster_path}
-                    productVoteAverage={tvShow.vote_average}
-                />
-            )
-        }
-
-        return (
-            <ProductCard
-                key={tvShow.id}
-                productType="tv"
-                productId={tvShow.id}
-                productTitle={tvShow.name}
-                productPosterPath={tvShow.poster_path}
-                productVoteAverage={tvShow.vote_average}
-            />
-        )
-    })
-
-    const content = type === 'movie' ? moviesContent : tvShowsContent
     return (
         <Grid
             container
@@ -109,10 +69,10 @@ const Search = () => {
             mb={{ xs: '10vh', md: 4 }}
             className="paper"
         >
-            <div className="search__title">
-                <h2>{initialQuery}</h2>
+            <div className="category-title">
+                <h2>Trending Movies</h2>
             </div>
-            {isError ? <p>{error?.message}</p> : null}
+            {isError ? <p>{error.message}</p> : null}
 
             <Grid
                 container
@@ -122,7 +82,7 @@ const Search = () => {
                 flexWrap="wrap"
                 width="100%"
             >
-                {content}
+                {moviesContent}
                 {/* Avoiding to jump back to the after loading new items */}
                 {isLoading ? <Spinner /> : null}
             </Grid>
@@ -130,4 +90,4 @@ const Search = () => {
     )
 }
 
-export default Search
+export default TrendingMovies
