@@ -13,7 +13,9 @@ $quaternary-color-main: #eeeeee;
 $quaternary-color-light: lighten($quaternary-color-main, 10%);
 $quaternary-color-dark: darken($quaternary-color-main, 10%);
 
-$light-salmon: #ffa07a;
+$salmon-color-light: #ffa07a;
+$salmon-color-main: #f18e67;
+$salmon-color-dark: darken($salmon-color-main, 10%);
 
 $success-background-color: #55efc4;
 $success-text-color: $secondary-color-dark;
