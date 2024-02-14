@@ -1,0 +1,27 @@
+@import '../../../sass/styles/';
+
+.pagination__current-page {
+    background-color: $salmon-color-main;
+
+    &:hover {
+        background-color: $salmon-color-dark;
+    }
+}
+
+.pagination__button {
+    margin-right: 0.5rem;
+}
+
+.pagination__next-prev-button {
+    background-color: $salmon-color-light;
+
+    &:hover {
+        background-color: $salmon-color-main;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .pagination__not-show {
+        display: none;
+    }
+}
