@@ -22,7 +22,7 @@ const Favorites = () => {
     const fetchDetails = async (type: ProductType, id: number) => {
         try {
             const response = await axios.get(
-                `https://api.themoviedb.org/3/${type}/${id}?api_key=${CONSTANTES.TMDB_API_KEY}`,
+                `https://api.themoviedb.org/3/${type}/${id}?api_key=${CONSTANTES.TMDB_API_KEY}`
             )
             return response.data
         } catch (error: any) {
@@ -33,9 +33,7 @@ const Favorites = () => {
 
     const fetchData = async (type: ProductType, ids: number[]) => {
         try {
-            const detailsArray = await Promise.all(
-                ids.map(async (id) => await fetchDetails(type, id)),
-            )
+            const detailsArray = await Promise.all(ids.map(async (id) => await fetchDetails(type, id)))
             console.log(type, detailsArray)
             return detailsArray.filter((detail) => detail !== null)
         } catch (error: any) {
@@ -47,18 +45,12 @@ const Favorites = () => {
     useEffect(() => {
         const setData = async () => {
             if (moviesLikes) {
-                const movies: IMovieDetail[] = await fetchData(
-                    'movie',
-                    moviesLikes,
-                )
+                const movies: IMovieDetail[] = await fetchData('movie', moviesLikes)
                 setMoviesLikesData(movies)
             }
 
             if (tvShowsLikes) {
-                const tvShows: ITvShowDetail[] = await fetchData(
-                    'tv',
-                    tvShowsLikes,
-                )
+                const tvShows: ITvShowDetail[] = await fetchData('tv', tvShowsLikes)
                 setTvShowsLikesData(tvShows)
             }
             setLoading(false)
@@ -73,13 +65,7 @@ const Favorites = () => {
     }, [moviesLikesData, tvShowsLikesData, loading])
 
     return (
-        <Grid
-            container
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
-            mb={{ xs: '10vh', md: 0 }}
-        >
+        <Grid container flexDirection="column" justifyContent="center" alignItems="center" mb={{ xs: '10vh', md: 0 }}>
             {loading ? (
                 <Spinner />
             ) : (
@@ -95,9 +81,11 @@ const Favorites = () => {
                         mb={4}
                         className="paper"
                     >
-                        <div className="category-title">
-                            <h2>Movies Liked</h2>
-                        </div>
+                        <Grid item xs={12}>
+                            <div className="category-title">
+                                <h2>Movies Liked</h2>
+                            </div>
+                        </Grid>
 
                         {moviesLikesData?.map((movie) => (
                             <ProductCard
@@ -122,9 +110,11 @@ const Favorites = () => {
                         mb={4}
                         className="paper"
                     >
-                        <div className="category-title">
-                            <h2>Tv-Shows Liked</h2>
-                        </div>
+                        <Grid item xs={12}>
+                            <div className="category-title">
+                                <h2>Tv-Shows Liked</h2>
+                            </div>
+                        </Grid>
 
                         {tvShowsLikesData?.map((tvShow) => (
                             <ProductCard
