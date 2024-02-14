@@ -48,6 +48,7 @@ const TvShowsGenre = () => {
             justifyContent="center"
             alignItems="center"
             p={3}
+            item
             xs={11}
             mb={{ xs: '10vh', md: 4 }}
             className="paper"

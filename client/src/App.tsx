@@ -19,6 +19,8 @@ import TvShows from './pages/tvShows/TvShows'
 import TvShowsGenre from './pages/tvShows/TvShowsGenre'
 import Search from './pages/search/Search'
 import Favorites from './pages/favorites/Favorites'
+import TrendingMovies from './pages/movies/TrendingMovies'
+import TrendingTvShows from './pages/tvShows/TrendingTvShows'
 
 function App() {
     const ROLES = {
@@ -46,9 +48,11 @@ function App() {
                         <Route path="profile/:id" element={<UserProfilePage />} />
                         <Route path="movies" element={<Movies />} />
                         <Route path="movies/:movieGenre" element={<MoviesGenre />} />
+                        <Route path="movies/trending" element={<TrendingMovies />} />
                         <Route path="movie/:id" element={<Movie />} />
                         <Route path="tv-shows" element={<TvShows />} />
                         <Route path="tv-shows/:tvShowGenre" element={<TvShowsGenre />} />
+                        <Route path="tv-shows/trending" element={<TrendingTvShows />} />
                         <Route path="tv-show/:id" element={<TvShow />} />
                         <Route path="search" element={<Search />} />
                         <Route path="favorites" element={<Favorites />} />

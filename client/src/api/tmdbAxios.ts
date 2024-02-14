@@ -28,3 +28,18 @@ export const getProductByGenre = async (type: ProductType, genreNb: string, page
         ? response.data.results.filter((e: IMovieDetail) => e.poster_path !== null)
         : response.data.results.filter((e: ITvShowDetail) => e.poster_path !== null)
 }
+
+export const getTrendingsMovies = async (pageNum: number, options = {}) => {
+    const response = await tmdbApi.get(`/movie/popular?page=${pageNum}&api_key=${CONSTANTES.TMDB_API_KEY}`)
+    return response.data
+}
+
+export const getTrendingTvShows = async (pageNum: number, options = {}) => {
+    const response = await tmdbApi.get(`/tv/popular?page=${pageNum}&api_key=${CONSTANTES.TMDB_API_KEY}`)
+    return response.data
+}
+
+export const getTrendingUrl = (type: ProductType): string => {
+    return `https://api.themoviedb.org/3/${type}/popular?api_key=${CONSTANTES.TMDB_API_KEY}`
+    // return `https://api.themoviedb.org/3/trending/${type}/week?api_key=${CONSTANTES.TMDB_API_KEY}`
+}

@@ -13,7 +13,7 @@ interface Props {
     productType: ProductType
     productsTypeName: string
     productsTypeApiUrl: string
-    productsTypeGenreId: number
+    productsTypeGenreId?: number
 }
 
 const ProductsTypeRow: React.FC<Props> = ({
@@ -31,16 +31,8 @@ const ProductsTypeRow: React.FC<Props> = ({
             const response = await axios.get(productsTypeApiUrl)
 
             productType === 'movie'
-                ? setMoviesData(
-                      response.data.results.filter(
-                          (e: IMovieData) => e.poster_path !== null,
-                      ),
-                  )
-                : setTvShowsData(
-                      response.data.results.filter(
-                          (e: ITvShowDetail) => e.poster_path !== null,
-                      ),
-                  )
+                ? setMoviesData(response.data.results.filter((e: IMovieData) => e.poster_path !== null))
+                : setTvShowsData(response.data.results.filter((e: ITvShowDetail) => e.poster_path !== null))
         } catch (error: any) {
             console.error(error.message)
         } finally {
@@ -83,14 +75,15 @@ const ProductsTypeRow: React.FC<Props> = ({
     }
 
     // Handling Sci-Fi & Fantasy genre link issue
-    productsTypeName =
-        productType === 'tv' && productsTypeGenreId === 10765
-            ? 'Sci Fi & Fantasy'
-            : productsTypeName
+    productsTypeName = productType === 'tv' && productsTypeGenreId === 10765 ? 'Sci Fi & Fantasy' : productsTypeName
 
     const link =
         productType === 'movie'
-            ? `/movies/${productsTypeName}-${String(productsTypeGenreId)}`
+            ? productsTypeName.startsWith('Trending')
+                ? '/movies/trending'
+                : `/movies/${productsTypeName}-${String(productsTypeGenreId)}`
+            : productsTypeName.startsWith('Trending')
+            ? '/tv-shows/trending'
             : `/tv-shows/${productsTypeName}-${String(productsTypeGenreId)}`
 
     return (
