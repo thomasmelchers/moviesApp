@@ -8,6 +8,7 @@ import { ProductType } from '../../types'
 import { Grid } from '@mui/material'
 import Spinner from '../../components/shared/spinner/Spinner'
 import ProductCard from '../../components/shared/productCard/ProductCard'
+import { getProductDetail } from '../../api/tmdbAxios'
 
 const Favorites = () => {
     const { likes } = useGetLikes()
@@ -21,10 +22,7 @@ const Favorites = () => {
 
     const fetchDetails = async (type: ProductType, id: number) => {
         try {
-            const response = await axios.get(
-                `https://api.themoviedb.org/3/${type}/${id}?api_key=${CONSTANTES.TMDB_API_KEY}`
-            )
-            return response.data
+            return await getProductDetail(type, id)
         } catch (error: any) {
             console.error(error)
             return null
@@ -58,11 +56,6 @@ const Favorites = () => {
 
         setData()
     }, [likes])
-
-    useEffect(() => {
-        console.log('movies:', moviesLikesData, 'tv:', tvShowsLikesData)
-        console.log(loading)
-    }, [moviesLikesData, tvShowsLikesData, loading])
 
     return (
         <Grid container flexDirection="column" justifyContent="center" alignItems="center" mb={{ xs: '10vh', md: 0 }}>

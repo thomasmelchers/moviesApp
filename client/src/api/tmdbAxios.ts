@@ -8,6 +8,12 @@ export const tmdbApi = axios.create({
     baseURL: 'https://api.themoviedb.org/3',
 })
 
+export const getProductDetail = async (type: ProductType, id: number | string) => {
+    const response = await tmdbApi.get(`/${type}/${id}?api_key=${CONSTANTES.TMDB_API_KEY}`)
+
+    return response.data
+}
+
 export const getMoviesSearch = async (pageParam = 1, query: string, options = {}) => {
     const response = await tmdbApi.get(
         `/search/movie?query=${query}&page=${pageParam}&api_key=${CONSTANTES.TMDB_API_KEY}`
