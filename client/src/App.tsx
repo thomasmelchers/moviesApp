@@ -21,6 +21,7 @@ import Search from './pages/search/Search'
 import Favorites from './pages/favorites/Favorites'
 import TrendingMovies from './pages/movies/TrendingMovies'
 import TrendingTvShows from './pages/tvShows/TrendingTvShows'
+import Error from './pages/error/Error'
 
 function App() {
     const ROLES = {
@@ -56,6 +57,7 @@ function App() {
                         <Route path="tv-show/:id" element={<TvShow />} />
                         <Route path="search" element={<Search />} />
                         <Route path="favorites" element={<Favorites />} />
+                        <Route path="error" element={<Error />} />
                     </Route>
 
                     {/* Admin routes */}
