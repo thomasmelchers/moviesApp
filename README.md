@@ -6,7 +6,7 @@ This project is made by two parts: the UI and the [API](https://github.com/thoma
 This repo is dedicated to UI which has been build with React 18 and Typescript. It is a web application where each user can create an account and look for his/her favorite movies and tv-shows. All the data are comming from a thriparty API, TMDB API.
 The UI holds several features such as login with access and refresh tokens, user profile, filters, search bar, paging, infinite scroll, youtube iframe, ...
 
-![landingPage](client/public/assets/pictures/)
+![landingPage](client/public/assets/pictures/landing-page.png)
 
 ## Features
 
