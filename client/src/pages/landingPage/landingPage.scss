@@ -1,21 +1,36 @@
 @import '../../sass/styles/';
 
-.landing-page {
+.landing-page-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.background-container {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 100vh;
-    background-image: url(../../../public/assets/pictures/Posters.jpg);
+    height: 110%;
+    background-image: url(../../../public/assets/pictures/landing-page.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.7;
+    transform: rotate(-10deg);
+    opacity: 0.5;
+    z-index: -1; /* Ensure it's behind other content */
+}
+
+.landing-page {
+    width: 100%;
+    height: 99vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: start;
+    margin-top: 1vh;
 }
 
 .landing-page__banner {
-    border: 1px solid yellow;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -23,10 +38,16 @@
 
     h1 {
         display: inline-block;
-        color: $primary-color-main;
+        color: $thirnary-color-main;
         letter-spacing: 3px;
         margin-bottom: 0;
     }
+}
+
+.landing-page__banner__signin {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .register-link {
@@ -34,21 +55,22 @@
 }
 
 .landing-page__container {
-    height: 90%;
-    width: 100%;
-    color: white;
-    opacity: 1;
-    font-size: larger;
-    font-weight: 900;
     text-align: center;
-    border: 1px solid red;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    border-radius: 15px;
+    padding: 2rem;
+    background-color: rgb(57, 62, 70, 0.6);
+    // opacity: 0.3;
+    box-shadow: (0, 0, 0, 0.1);
 
-.landing-page__banner__signin {
-    flex-grow: 1;
-    display: flex;
-    justify-content: flex-end;
+    h2 {
+        color: $thirnary-color-dark;
+        letter-spacing: 2px;
+        margin-bottom: 0.5rem;
+    }
+
+    p {
+        font-weight: 650;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.7rem;
+    }
 }

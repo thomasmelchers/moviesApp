@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-import CONSTANTES from '../../utils/constantes'
 import useGetLikes from '../../hooks/useGetLikes'
 import IMovieDetail from '../../interfaces/IMovieData'
 import ITvShowDetail from '../../interfaces/ITvShowDetail'
@@ -32,7 +30,6 @@ const Favorites = () => {
     const fetchData = async (type: ProductType, ids: number[]) => {
         try {
             const detailsArray = await Promise.all(ids.map(async (id) => await fetchDetails(type, id)))
-            console.log(type, detailsArray)
             return detailsArray.filter((detail) => detail !== null)
         } catch (error: any) {
             console.error('Error fetching data', error)

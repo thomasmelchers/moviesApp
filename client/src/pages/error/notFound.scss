@@ -1,0 +1,13 @@
+@import '../../sass/styles/';
+
+.not-found__container {
+    border-radius: 15px;
+    padding: 2rem;
+    background-color: $quaternary-color-dark;
+    text-align: center;
+
+    h2 {
+        color: $primary-color-main;
+        margin-bottom: 1rem;
+    }
+}

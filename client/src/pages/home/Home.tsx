@@ -15,11 +15,7 @@ interface IFormattedGenres {
 }
 
 const Home = () => {
-    const {
-        loading,
-        error,
-        listOfSelectedGenres: genresMovieSelected,
-    } = useTMDBApiSelectedGenres('movie', 3)
+    const { loading, error, listOfSelectedGenres: genresMovieSelected } = useTMDBApiSelectedGenres('movie', 3)
 
     const {
         loading: tvShowLoading,
@@ -27,10 +23,7 @@ const Home = () => {
         listOfSelectedGenres: genresTvShowSelected,
     } = useTMDBApiSelectedGenres('tv', 3)
 
-    const getGenres = (
-        genresSelected: IProductGenres[],
-        productType: ProductType,
-    ) => {
+    const getGenres = (genresSelected: IProductGenres[], productType: ProductType) => {
         const formattedGenres = genresSelected.map((genre) => ({
             id: genre.id,
             name: genre.name,
@@ -41,22 +34,16 @@ const Home = () => {
         return formattedGenres
     }
 
-    const formattedGenresMovie: IFormattedGenres[] = getGenres(
-        genresMovieSelected,
-        'movie',
-    )
+    const formattedGenresMovie: IFormattedGenres[] = getGenres(genresMovieSelected, 'movie')
 
-    const formattedGenresTvShow: IFormattedGenres[] = getGenres(
-        genresTvShowSelected,
-        'tv',
-    )
+    const formattedGenresTvShow: IFormattedGenres[] = getGenres(genresTvShowSelected, 'tv')
 
     const productsGenres = formattedGenresMovie.concat(formattedGenresTvShow)
     const shuffledProductGenres = productsGenres.sort(() => Math.random() - 0.5)
 
     const rowsOfMovies = shuffledProductGenres?.map((genre) => (
         <ProductsTypeRow
-            key={genre.name}
+            key={genre.url}
             productsTypeName={genre.name}
             productsTypeApiUrl={genre.url}
             productsTypeGenreId={genre.id}
@@ -65,13 +52,7 @@ const Home = () => {
     ))
 
     return (
-        <Grid
-            container
-            flexDirection="column"
-            justifyContent="center"
-            alignItems="center"
-            pb={{ xs: '10vh', md: 0 }}
-        >
+        <Grid container flexDirection="column" justifyContent="center" alignItems="center" pb={{ xs: '10vh', md: 0 }}>
             <Grid
                 container
                 flexDirection="row"
@@ -86,11 +67,7 @@ const Home = () => {
                 </Grid>
             </Grid>
             {error || tvShowError ? <p>{error || tvShowError}</p> : null}
-            {loading && tvShowLoading && !error && !tvShowError ? (
-                <Spinner />
-            ) : (
-                rowsOfMovies
-            )}
+            {loading && tvShowLoading && !error && !tvShowError ? <Spinner /> : rowsOfMovies}
         </Grid>
     )
 }
